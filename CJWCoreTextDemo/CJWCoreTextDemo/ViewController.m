@@ -18,8 +18,14 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+//    self.view.backgroundColor = [UIColor redColor];
     
 }
 
+-(void)injected{
+    NSLog(@"I've been injected: %@", self);
+    //此处的代码想怎么写就怎么写，完事了按下Ctrl+S保存一下就能再模拟器里面看到刚刚改的代码了，是不是很神奇？
+    self.view.backgroundColor = [UIColor blueColor];
+}
 
 @end
