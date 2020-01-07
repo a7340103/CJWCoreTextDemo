@@ -10,7 +10,7 @@
 #import "CJWCDisplayView.h"
 
 @interface ViewController ()
-@property (weak, nonatomic) IBOutlet CJWCDisplayView *display;
+@property (strong, nonatomic) CJWCDisplayView *display;
 
 @end
 
@@ -18,6 +18,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.view.backgroundColor = [UIColor whiteColor];
     // Do any additional setup after loading the view.
     CJWCFrameParserConfig *config = [[CJWCFrameParserConfig alloc] init];
     config.textColor = [UIColor blackColor];
@@ -47,6 +48,18 @@
     self.display.height = data.height;
 //    self.display.backgroundColor = [UIColor yellowColor];
     
+}
+
+- (CJWCDisplayView *)display{
+    if (!_display) {
+        CGRect rect = self.view.bounds;
+        rect.origin.y = 200;
+        _display = [[CJWCDisplayView alloc] initWithFrame:rect];
+        
+        _display.backgroundColor = [UIColor whiteColor];
+        [self.view addSubview:_display];
+    }
+    return _display;
 }
 
 //-(void)injected{
