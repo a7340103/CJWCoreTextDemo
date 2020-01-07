@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2EBE264D23C472480081191C /* UIView+frameAdjust.m in Sources */ = {isa = PBXBuildFile; fileRef = 2EBE264A23C472480081191C /* UIView+frameAdjust.m */; };
+		2EBE265023C4724F0081191C /* CJWCDisplayView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2EBE264F23C4724F0081191C /* CJWCDisplayView.m */; };
+		2EBE265723C472580081191C /* CJWCFrameParserConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = 2EBE265123C472580081191C /* CJWCFrameParserConfig.m */; };
+		2EBE265823C472580081191C /* CJWCoreTextData.m in Sources */ = {isa = PBXBuildFile; fileRef = 2EBE265523C472580081191C /* CJWCoreTextData.m */; };
+		2EBE265923C472580081191C /* CJWCFrameParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 2EBE265623C472580081191C /* CJWCFrameParser.m */; };
 		2EC97C6D23C31E57006CE2D8 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 2EC97C6C23C31E57006CE2D8 /* AppDelegate.m */; };
 		2EC97C7023C31E57006CE2D8 /* SceneDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 2EC97C6F23C31E57006CE2D8 /* SceneDelegate.m */; };
 		2EC97C7323C31E57006CE2D8 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2EC97C7223C31E57006CE2D8 /* ViewController.m */; };
@@ -14,10 +19,22 @@
 		2EC97C7823C31E58006CE2D8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2EC97C7723C31E58006CE2D8 /* Assets.xcassets */; };
 		2EC97C7B23C31E58006CE2D8 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2EC97C7923C31E58006CE2D8 /* LaunchScreen.storyboard */; };
 		2EC97C7E23C31E58006CE2D8 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 2EC97C7D23C31E58006CE2D8 /* main.m */; };
-		2EC97C8923C31F10006CE2D8 /* CJWCDisplayView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2EC97C8823C31F10006CE2D8 /* CJWCDisplayView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		2EBE264923C472480081191C /* CommonDefine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommonDefine.h; sourceTree = "<group>"; };
+		2EBE264A23C472480081191C /* UIView+frameAdjust.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+frameAdjust.m"; sourceTree = "<group>"; };
+		2EBE264B23C472480081191C /* UIView+frameAdjust.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+frameAdjust.h"; sourceTree = "<group>"; };
+		2EBE264C23C472480081191C /* CommonHeader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommonHeader.h; sourceTree = "<group>"; };
+		2EBE264E23C4724F0081191C /* CJWCDisplayView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CJWCDisplayView.h; sourceTree = "<group>"; };
+		2EBE264F23C4724F0081191C /* CJWCDisplayView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CJWCDisplayView.m; sourceTree = "<group>"; };
+		2EBE265123C472580081191C /* CJWCFrameParserConfig.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CJWCFrameParserConfig.m; sourceTree = "<group>"; };
+		2EBE265223C472580081191C /* CJWCoreTextData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CJWCoreTextData.h; sourceTree = "<group>"; };
+		2EBE265323C472580081191C /* CJWCFrameParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CJWCFrameParser.h; sourceTree = "<group>"; };
+		2EBE265423C472580081191C /* CJWCFrameParserConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CJWCFrameParserConfig.h; sourceTree = "<group>"; };
+		2EBE265523C472580081191C /* CJWCoreTextData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CJWCoreTextData.m; sourceTree = "<group>"; };
+		2EBE265623C472580081191C /* CJWCFrameParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CJWCFrameParser.m; sourceTree = "<group>"; };
+		2EBE265B23C4736B0081191C /* CJWCoreTextDemo.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CJWCoreTextDemo.pch; sourceTree = "<group>"; };
 		2EC97C6823C31E57006CE2D8 /* CJWCoreTextDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CJWCoreTextDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2EC97C6B23C31E57006CE2D8 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		2EC97C6C23C31E57006CE2D8 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -30,8 +47,6 @@
 		2EC97C7A23C31E58006CE2D8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		2EC97C7C23C31E58006CE2D8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		2EC97C7D23C31E58006CE2D8 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		2EC97C8723C31F10006CE2D8 /* CJWCDisplayView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CJWCDisplayView.h; sourceTree = "<group>"; };
-		2EC97C8823C31F10006CE2D8 /* CJWCDisplayView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CJWCDisplayView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -45,6 +60,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		2E0D5BA823C45DEE002D6C57 /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				2EBE264923C472480081191C /* CommonDefine.h */,
+				2EBE264C23C472480081191C /* CommonHeader.h */,
+				2EBE264B23C472480081191C /* UIView+frameAdjust.h */,
+				2EBE264A23C472480081191C /* UIView+frameAdjust.m */,
+			);
+			path = Common;
+			sourceTree = "<group>";
+		};
 		2EC97C5F23C31E57006CE2D8 = {
 			isa = PBXGroup;
 			children = (
@@ -76,6 +102,7 @@
 				2EC97C7923C31E58006CE2D8 /* LaunchScreen.storyboard */,
 				2EC97C7C23C31E58006CE2D8 /* Info.plist */,
 				2EC97C7D23C31E58006CE2D8 /* main.m */,
+				2EBE265B23C4736B0081191C /* CJWCoreTextDemo.pch */,
 			);
 			path = CJWCoreTextDemo;
 			sourceTree = "<group>";
@@ -83,6 +110,7 @@
 		2EC97C8423C31EAD006CE2D8 /* CJWCoreText */ = {
 			isa = PBXGroup;
 			children = (
+				2E0D5BA823C45DEE002D6C57 /* Common */,
 				2EC97C8623C31ECF006CE2D8 /* Views */,
 				2EC97C8523C31EBF006CE2D8 /* Models */,
 			);
@@ -92,6 +120,12 @@
 		2EC97C8523C31EBF006CE2D8 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				2EBE265323C472580081191C /* CJWCFrameParser.h */,
+				2EBE265623C472580081191C /* CJWCFrameParser.m */,
+				2EBE265423C472580081191C /* CJWCFrameParserConfig.h */,
+				2EBE265123C472580081191C /* CJWCFrameParserConfig.m */,
+				2EBE265223C472580081191C /* CJWCoreTextData.h */,
+				2EBE265523C472580081191C /* CJWCoreTextData.m */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -99,8 +133,8 @@
 		2EC97C8623C31ECF006CE2D8 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				2EC97C8723C31F10006CE2D8 /* CJWCDisplayView.h */,
-				2EC97C8823C31F10006CE2D8 /* CJWCDisplayView.m */,
+				2EBE264E23C4724F0081191C /* CJWCDisplayView.h */,
+				2EBE264F23C4724F0081191C /* CJWCDisplayView.m */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -132,7 +166,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastUpgradeCheck = 1130;
-				ORGANIZATIONNAME = ai.cc;
+				ORGANIZATIONNAME = djw.cc;
 				TargetAttributes = {
 					2EC97C6723C31E57006CE2D8 = {
 						CreatedOnToolsVersion = 11.3;
@@ -175,10 +209,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2EBE265823C472580081191C /* CJWCoreTextData.m in Sources */,
 				2EC97C7323C31E57006CE2D8 /* ViewController.m in Sources */,
+				2EBE265923C472580081191C /* CJWCFrameParser.m in Sources */,
 				2EC97C6D23C31E57006CE2D8 /* AppDelegate.m in Sources */,
-				2EC97C8923C31F10006CE2D8 /* CJWCDisplayView.m in Sources */,
+				2EBE265723C472580081191C /* CJWCFrameParserConfig.m in Sources */,
+				2EBE264D23C472480081191C /* UIView+frameAdjust.m in Sources */,
 				2EC97C7E23C31E58006CE2D8 /* main.m in Sources */,
+				2EBE265023C4724F0081191C /* CJWCDisplayView.m in Sources */,
 				2EC97C7023C31E57006CE2D8 /* SceneDelegate.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -243,8 +281,12 @@
 				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_INCREASE_PRECOMPILED_HEADER_SHARING = NO;
+				GCC_INPUT_FILETYPE = automatic;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "$(SRCROOT)/CJWCoreTextDemo/CJWCoreTextDemo.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
@@ -300,7 +342,11 @@
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_INCREASE_PRECOMPILED_HEADER_SHARING = NO;
+				GCC_INPUT_FILETYPE = automatic;
 				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "$(SRCROOT)/CJWCoreTextDemo/CJWCoreTextDemo.pch";
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				GCC_WARN_UNDECLARED_SELECTOR = YES;

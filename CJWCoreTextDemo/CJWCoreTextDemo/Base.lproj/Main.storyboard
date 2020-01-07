@@ -15,22 +15,18 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jJ4-vQ-onX" customClass="CJWCDisplayView">
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ha4-DP-iUh" customClass="CJWCDisplayView">
                                 <rect key="frame" x="87" y="384" width="240" height="128"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="128" id="Q6d-Mn-J95"/>
-                                    <constraint firstAttribute="width" constant="240" id="jE0-nw-rI7"/>
-                                </constraints>
                             </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        <constraints>
-                            <constraint firstItem="jJ4-vQ-onX" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="BhA-6U-a4d"/>
-                            <constraint firstItem="jJ4-vQ-onX" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="boG-z3-0UN"/>
-                        </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
+                    <connections>
+                        <outlet property="display" destination="ha4-DP-iUh" id="A8V-Bm-cbk"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
