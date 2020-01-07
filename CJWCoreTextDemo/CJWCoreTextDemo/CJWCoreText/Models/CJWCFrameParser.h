@@ -17,6 +17,7 @@ NS_ASSUME_NONNULL_BEGIN
 + (NSMutableDictionary *)attributesWithConfig:(CJWCFrameParserConfig *)config;
 + (CJWCoreTextData *)parseContent:(NSString *)content config:(CJWCFrameParserConfig*)config;
 + (CJWCoreTextData *)parseAttributedContent:(NSAttributedString *)content config:(CJWCFrameParserConfig*)config;
++ (CJWCoreTextData *)parseTemplateFile:(NSString *)path config:(CJWCFrameParserConfig*)config;
 
 @end
 
