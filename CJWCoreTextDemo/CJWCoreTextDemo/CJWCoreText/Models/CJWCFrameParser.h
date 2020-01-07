@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 #import "CJWCoreTextData.h"
 #import "CJWCFrameParserConfig.h"
+#import "CJWCoreTextImageData.h"
 
 NS_ASSUME_NONNULL_BEGIN
 

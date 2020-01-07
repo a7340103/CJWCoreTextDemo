@@ -60,11 +60,14 @@
 
 // 方法一
 + (CJWCoreTextData *)parseTemplateFile:(NSString *)path config:(CJWCFrameParserConfig*)config {
-    NSAttributedString *content = [self loadTemplateFile:path config:config];
-    return [self parseAttributedContent:content config:config];
+    NSMutableArray *imageArray = [NSMutableArray array];
+    NSAttributedString *content = [self loadTemplateFile:path config:config imageArray:imageArray];
+    CJWCoreTextData *data = [self parseAttributedContent:content config:config];
+    data.imageArray = imageArray;
+    return data;
 }
 // 方法二
-+ (NSAttributedString *)loadTemplateFile:(NSString *)path config:(CJWCFrameParserConfig*)config {
++ (NSAttributedString *)loadTemplateFile:(NSString *)path config:(CJWCFrameParserConfig*)config imageArray:(NSMutableArray *)imageArray{
     NSData *data = [NSData dataWithContentsOfFile:path];
     NSMutableAttributedString *result = [[NSMutableAttributedString alloc] init];
     if (data) {
@@ -78,6 +81,15 @@
                     NSAttributedString *as =
                     [self parseAttributedContentFromNSDictionary:dict
                                                           config:config];
+                    [result appendAttributedString:as];
+                }else if ([type isEqualToString:@"img"]){
+                    // 创建 CoreTextImageData
+                    CJWCoreTextImageData *imageData = [[CJWCoreTextImageData alloc] init];
+                    imageData.name = dict[@"name"];
+                    imageData.position = [result length];
+                    [imageArray addObject:imageData];
+                    // 创建空白占位符，并且设置它的 CTRunDelegate 信息
+                    NSAttributedString *as = [self parseImageDataFromNSDictionary:dict config:config];
                     [result appendAttributedString:as];
                 }
             }
@@ -145,5 +157,22 @@
     CFRelease(path);
     return frame;
 }
+
+#pragma mark - 解析图片
+static CGFloat ascentCallback(void *ref){
+    return [(NSNumber*)[(__bridge NSDictionary*)ref objectForKey:@"height"] floatValue];
+}
+static CGFloat descentCallback(void *ref){
+    return 0;
+}
+static CGFloat widthCallback(void* ref){
+    return [(NSNumber*)[(__bridge NSDictionary*)ref objectForKey:@"width"] floatValue];
+}
+
++ (NSAttributedString *)parseImageDataFromNSDictionary:(NSDictionary *)dict
+                                                config:(CJWCFrameParserConfig*)config {
+    return @"";
+}
+
 
 @end

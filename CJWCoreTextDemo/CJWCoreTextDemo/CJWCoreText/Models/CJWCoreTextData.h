@@ -15,6 +15,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (assign, nonatomic) CTFrameRef ctFrame;
 @property (assign,nonatomic)  CGFloat height;
 @property (strong, nonatomic) NSAttributedString *content;
+@property (strong, nonatomic) NSArray * imageArray;
 
 
 @end
