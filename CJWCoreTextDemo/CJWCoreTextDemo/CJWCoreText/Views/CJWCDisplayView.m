@@ -12,8 +12,18 @@
 NSString *const CTDisplayViewImagePressedNotification = @"CJWCDisplayViewImagePressedNotification";
 NSString *const CTDisplayViewLinkPressedNotification = @"CJWCDisplayViewLinkPressedNotification";
 
+typedef enum CTDisplayViewState : NSInteger {
+    CTDisplayViewStateNormal,       // 普通状态
+    CTDisplayViewStateTouching,     // 正在按下，需要弹出放大镜
+    CTDisplayViewStateSelecting     // 选中了一些文本，需要弹出复制菜单
+}CTDisplayViewState;
 
 @interface CJWCDisplayView()
+@property (nonatomic) NSInteger selectionStartPosition;
+@property (nonatomic) NSInteger selectionEndPosition;
+@property (nonatomic) CTDisplayViewState state;
+@property (strong, nonatomic) UIImageView *leftSelectionAnchor;
+@property (strong, nonatomic) UIImageView *rightSelectionAnchor;
 @end
 
 
@@ -39,7 +49,31 @@ NSString *const CTDisplayViewLinkPressedNotification = @"CJWCDisplayViewLinkPres
           [[UITapGestureRecognizer alloc] initWithTarget:self
                     action:@selector(userTapGestureDetected:)];
     [self addGestureRecognizer:tapRecognizer];
+    
+    UIGestureRecognizer *longPressRecognizer = [[UILongPressGestureRecognizer alloc] initWithTarget:self
+                                                                                             action:@selector(userLongPressedGuestureDetected:)];
+    [self addGestureRecognizer:longPressRecognizer];
     self.userInteractionEnabled = YES;
+
+}
+- (void)userLongPressedGuestureDetected:(UILongPressGestureRecognizer *)recognizer {
+    CGPoint point = [recognizer locationInView:self];
+    debugLog(@"state = %d", recognizer.state);
+    debugLog(@"point = %@", NSStringFromCGPoint(point));
+    if (recognizer.state == UIGestureRecognizerStateBegan || recognizer.state == UIGestureRecognizerStateChanged) {
+        CFIndex index = [CJWCoreTextUtils touchContentOffsetInView:self atPoint:point data:self.data];
+        if (index != -1 && index < self.data.content.length) {
+            _selectionStartPosition = index;
+            _selectionEndPosition = index+2;
+        }
+        self.state = CTDisplayViewStateTouching;
+    }else{
+        if (_selectionStartPosition >= 0 && _selectionEndPosition <= self.data.content.length) {
+            self.state = CTDisplayViewStateSelecting;
+        }else{
+            self.state = CTDisplayViewStateNormal;
+        }
+    }
 }
 
 - (void)userTapGestureDetected:(UIGestureRecognizer *)recognizer {
@@ -87,6 +121,11 @@ NSString *const CTDisplayViewLinkPressedNotification = @"CJWCDisplayViewLinkPres
     //缩放方法，x轴缩放系数为1，则不变，y轴缩放系数为-1，则相当于以x轴为轴旋转180度
     CGContextScaleCTM(context, 1.0, -1.0);
 
+    if (self.state == CTDisplayViewStateTouching || self.state == CTDisplayViewStateSelecting) {
+//        [self drawSelectionArea];
+        [self drawAnchors];
+    }
+    
     if (self.data) {
         CTFrameDraw(self.data.ctFrame, context);
     }
@@ -96,6 +135,78 @@ NSString *const CTDisplayViewLinkPressedNotification = @"CJWCDisplayViewLinkPres
             CGContextDrawImage(context, imageData.imagePosition, image.CGImage);
         }
     }
+}
+
+- (void)drawAnchors{
+    
+}
+
+//根据触摸状态设置不同的东西
+- (void)setState:(CTDisplayViewState)state{
+    if (_state == state) {
+        return;
+    }
+    _state = state;
+    
+    if (_state == CTDisplayViewStateNormal) {
+        
+    }else if (_state == CTDisplayViewStateTouching){
+        if (_leftSelectionAnchor == nil && _rightSelectionAnchor == nil) {
+            [self setupAnchors];
+        }
+        
+    }else if (_state == CTDisplayViewStateSelecting){
+        
+    }
+}
+
+#pragma mark - 设置游标
+#define FONT_HEIGHT  40
+
+- (void)setupAnchors{
+    _leftSelectionAnchor = [self createSelectionAnchorWithTop:YES];
+    _rightSelectionAnchor =  [self createSelectionAnchorWithTop:NO];
+    [self addSubview:_leftSelectionAnchor];
+    [self addSubview:_rightSelectionAnchor];
+}
+
+- (UIImageView *)createSelectionAnchorWithTop:(BOOL)isTop {
+    UIImage *image = [self cursorWithFontHeight:FONT_HEIGHT isTop:isTop];
+    UIImageView *imageView = [[UIImageView alloc] initWithImage:image];
+    imageView.frame = CGRectMake(0, 0, 11, FONT_HEIGHT);
+    return imageView;
+}
+
+- (UIImage *)cursorWithFontHeight:(CGFloat)height isTop:(BOOL)top {
+    
+    CGRect rect = CGRectMake(0, 0, 22, height * 2);
+    UIColor *color = RGB(28, 107, 222);
+    UIGraphicsBeginImageContext(rect.size);
+    CGContextRef context = UIGraphicsGetCurrentContext();
+    if (top) {
+        CGContextAddEllipseInRect(context, CGRectMake(0, 0, 22, 22));
+    }else{
+        CGContextAddEllipseInRect(context, CGRectMake(0, height * 2 - 22, 22, 22));
+    }
+    //设置填充颜色
+    CGContextSetFillColorWithColor(context, color.CGColor);
+    //渲染当前context上绘制的内容
+    CGContextFillPath(context);
+    // draw line
+    [color set];
+    //设置线宽
+    CGContextSetLineWidth(context, 4);
+    //移动画笔到point(11,22)
+    CGContextMoveToPoint(context, 11, 22);
+    //从point(11,22）和point(11,height*2-22)之间画根直线
+    CGContextAddLineToPoint(context, 11, height * 2 - 22);
+    //渲染画笔画过的颜色
+    CGContextStrokePath(context);
+    
+    
+    UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    return image;
 }
 
 @end

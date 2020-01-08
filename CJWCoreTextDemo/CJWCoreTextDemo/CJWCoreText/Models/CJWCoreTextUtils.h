@@ -14,7 +14,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface CJWCoreTextUtils : NSObject
 + (CJWCoreTextLinkData *)touchLinkInView:(UIView *)view atPoint:(CGPoint)point data:(CJWCoreTextData *)data;
-
++ (CFIndex)touchContentOffsetInView:(UIView *)view atPoint:(CGPoint)point data:(CJWCoreTextData *)data;
 @end
 
 NS_ASSUME_NONNULL_END
