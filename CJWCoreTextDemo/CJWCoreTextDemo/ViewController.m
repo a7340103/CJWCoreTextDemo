@@ -27,8 +27,7 @@
     CJWCoreTextData *data = [CJWCFrameParser parseTemplateFile:path config:config];
     self.display.data = data;
     self.display.height = data.height;
-    self.display.backgroundColor = [UIColor whiteColor];
-//    self.display.backgroundColor = [UIColor yellowColor];
+    self.display.backgroundColor = [UIColor yellowColor];
     
 }
 

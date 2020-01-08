@@ -86,7 +86,7 @@
                     // 创建 CoreTextImageData
                     CJWCoreTextImageData *imageData = [[CJWCoreTextImageData alloc] init];
                     imageData.name = dict[@"name"];
-                    imageData.position = [result length];
+                    imageData.position = (int)[result length];
                     [imageArray addObject:imageData];
                     // 创建空白占位符，并且设置它的 CTRunDelegate 信息
                     NSAttributedString *as = [self parseImageDataFromNSDictionary:dict config:config];
@@ -171,7 +171,28 @@ static CGFloat widthCallback(void* ref){
 
 + (NSAttributedString *)parseImageDataFromNSDictionary:(NSDictionary *)dict
                                                 config:(CJWCFrameParserConfig*)config {
-    return @"";
+    
+  /*
+  设置一个回调结构体，告诉代理该回调那些方法
+  */
+    CTRunDelegateCallbacks callBacks;//创建一个回调结构体，设置相关参数
+    //memset将已开辟内存空间 callbacks 的首 n 个字节的值设为值 0, 相当于对CTRunDelegateCallbacks内存空间初始化
+    memset(&callBacks, 0, sizeof(CTRunDelegateCallbacks));
+    //设置回调版本，默认这个
+    callBacks.version = kCTRunDelegateVersion1;
+    callBacks.getAscent = ascentCallback;
+    callBacks.getDescent = descentCallback;
+    callBacks.getWidth = widthCallback;
+    //创建代理
+    CTRunDelegateRef delegate = CTRunDelegateCreate(&callBacks, (__bridge void*)dict);
+    //创建空白字符
+    unichar placeHolde = 0xFFFC;
+    NSString *content = [NSString stringWithCharacters:&placeHolde length:1];
+    NSDictionary * attributes = [self attributesWithConfig:config];
+    NSMutableAttributedString *space = [[NSMutableAttributedString alloc] initWithString:content attributes:attributes];
+    CFAttributedStringSetAttribute((CFMutableAttributedStringRef)space, CFRangeMake(0, 1), kCTRunDelegateAttributeName, delegate);
+    CFRelease(delegate);
+    return space;
 }
 
 

@@ -26,33 +26,15 @@
     CGContextTranslateCTM(context, 0, self.bounds.size.height);
     //缩放方法，x轴缩放系数为1，则不变，y轴缩放系数为-1，则相当于以x轴为轴旋转180度
     CGContextScaleCTM(context, 1.0, -1.0);
-    
-//    //创建绘制区域
-//    CGMutablePathRef path = CGPathCreateMutable();
-//    //添加绘制尺寸
-////    CGPathAddRect(path, NULL, self.bounds);
-//    CGPathAddEllipseInRect(path, NULL, self.bounds);
-//    // 步骤 4
-//    NSAttributedString *attString = [[NSAttributedString alloc] initWithString:@"Hello World!"];
-//    attString = [[NSAttributedString alloc] initWithString:@"Hello World! "
-//                                     " 创建绘制的区域，CoreText 本身支持各种文字排版的区域，"
-//                                     " 我们这里简单地将 UIView 的整个界面作为排版的区域。"
-//                                     " 为了加深理解，建议读者将该步骤的代码替换成如下代码，"
-//                                     " 测试设置不同的绘制区域带来的界面变化。"];
-//
-//    //一个frame的工厂，负责生成frame
-//    CTFramesetterRef framesetter = CTFramesetterCreateWithAttributedString((CFAttributedStringRef)attString);
-//    //工厂根据绘制区域及富文本（可选范围，多次设置）设置frame
-//    CTFrameRef frame = CTFramesetterCreateFrame(framesetter,
-//    CFRangeMake(0, [attString length]), path, NULL);
-//
-//    CTFrameDraw(frame, context);
-//
-//    CFRelease(frame);
-//    CFRelease(path);
-//    CFRelease(framesetter);
+
     if (self.data) {
         CTFrameDraw(self.data.ctFrame, context);
+    }
+    for (CJWCoreTextImageData * imageData in self.data.imageArray) {
+        UIImage *image = [UIImage imageNamed:imageData.name];
+        if (image) {
+            CGContextDrawImage(context, imageData.imagePosition, image.CGImage);
+        }
     }
 }
 
