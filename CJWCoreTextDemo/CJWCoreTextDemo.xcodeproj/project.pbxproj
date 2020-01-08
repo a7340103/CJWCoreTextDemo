@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2E64EB0323C5D11200932FF2 /* CJWCoreTextLinkData.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E64EB0223C5D11200932FF2 /* CJWCoreTextLinkData.m */; };
 		2EBE264D23C472480081191C /* UIView+frameAdjust.m in Sources */ = {isa = PBXBuildFile; fileRef = 2EBE264A23C472480081191C /* UIView+frameAdjust.m */; };
 		2EBE265023C4724F0081191C /* CJWCDisplayView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2EBE264F23C4724F0081191C /* CJWCDisplayView.m */; };
 		2EBE265723C472580081191C /* CJWCFrameParserConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = 2EBE265123C472580081191C /* CJWCFrameParserConfig.m */; };
@@ -25,6 +26,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		2E64EB0123C5D11200932FF2 /* CJWCoreTextLinkData.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CJWCoreTextLinkData.h; sourceTree = "<group>"; };
+		2E64EB0223C5D11200932FF2 /* CJWCoreTextLinkData.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CJWCoreTextLinkData.m; sourceTree = "<group>"; };
 		2EBE264923C472480081191C /* CommonDefine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommonDefine.h; sourceTree = "<group>"; };
 		2EBE264A23C472480081191C /* UIView+frameAdjust.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+frameAdjust.m"; sourceTree = "<group>"; };
 		2EBE264B23C472480081191C /* UIView+frameAdjust.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+frameAdjust.h"; sourceTree = "<group>"; };
@@ -135,6 +138,8 @@
 				2EBE265523C472580081191C /* CJWCoreTextData.m */,
 				7ABB423123C4C9CB003C8403 /* CJWCoreTextImageData.h */,
 				7ABB423223C4C9CB003C8403 /* CJWCoreTextImageData.m */,
+				2E64EB0123C5D11200932FF2 /* CJWCoreTextLinkData.h */,
+				2E64EB0223C5D11200932FF2 /* CJWCoreTextLinkData.m */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -223,6 +228,7 @@
 			files = (
 				2EBE265823C472580081191C /* CJWCoreTextData.m in Sources */,
 				2EC97C7323C31E57006CE2D8 /* ViewController.m in Sources */,
+				2E64EB0323C5D11200932FF2 /* CJWCoreTextLinkData.m in Sources */,
 				2EBE265923C472580081191C /* CJWCFrameParser.m in Sources */,
 				7ABB423323C4C9CB003C8403 /* CJWCoreTextImageData.m in Sources */,
 				2EC97C6D23C31E57006CE2D8 /* AppDelegate.m in Sources */,

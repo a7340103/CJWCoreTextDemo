@@ -14,8 +14,8 @@
             filePath = "../CJWCoreTextDemo/ViewController.m"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "40"
-            endingLineNumber = "40"
+            startingLineNumber = "39"
+            endingLineNumber = "39"
             landmarkName = "-display"
             landmarkType = "7">
          </BreakpointContent>
