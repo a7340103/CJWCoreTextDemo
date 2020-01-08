@@ -17,6 +17,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (strong, nonatomic) NSAttributedString *content;
 @property (strong, nonatomic) NSArray * imageArray;
 
+@property (strong, nonatomic) NSArray * linkArray;
 
 @end
 

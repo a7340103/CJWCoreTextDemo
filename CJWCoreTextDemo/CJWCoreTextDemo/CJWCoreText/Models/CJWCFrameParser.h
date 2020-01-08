@@ -10,6 +10,7 @@
 #import "CJWCoreTextData.h"
 #import "CJWCFrameParserConfig.h"
 #import "CJWCoreTextImageData.h"
+#import "CJWCoreTextLinkData.h"
 
 NS_ASSUME_NONNULL_BEGIN
 

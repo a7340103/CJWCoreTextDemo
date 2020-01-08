@@ -61,13 +61,15 @@
 // 方法一
 + (CJWCoreTextData *)parseTemplateFile:(NSString *)path config:(CJWCFrameParserConfig*)config {
     NSMutableArray *imageArray = [NSMutableArray array];
-    NSAttributedString *content = [self loadTemplateFile:path config:config imageArray:imageArray];
+    NSMutableArray *linkArray = [NSMutableArray array];
+    NSAttributedString *content = [self loadTemplateFile:path config:config imageArray:imageArray linkArray:linkArray];
     CJWCoreTextData *data = [self parseAttributedContent:content config:config];
     data.imageArray = imageArray;
+    data.linkArray = linkArray;
     return data;
 }
 // 方法二
-+ (NSAttributedString *)loadTemplateFile:(NSString *)path config:(CJWCFrameParserConfig*)config imageArray:(NSMutableArray *)imageArray{
++ (NSAttributedString *)loadTemplateFile:(NSString *)path config:(CJWCFrameParserConfig*)config imageArray:(NSMutableArray *)imageArray linkArray:(NSMutableArray *)linkArray{
     NSData *data = [NSData dataWithContentsOfFile:path];
     NSMutableAttributedString *result = [[NSMutableAttributedString alloc] init];
     if (data) {
@@ -91,6 +93,20 @@
                     // 创建空白占位符，并且设置它的 CTRunDelegate 信息
                     NSAttributedString *as = [self parseImageDataFromNSDictionary:dict config:config];
                     [result appendAttributedString:as];
+                }else if ([type isEqualToString:@"link"]){
+                    NSUInteger startPos = result.length;
+                    NSAttributedString *as =
+                       [self parseAttributedContentFromNSDictionary:dict
+                                                             config:config];
+                    [result appendAttributedString:as];
+                    NSUInteger length = result.length - startPos;
+                    NSRange linkRange = NSMakeRange(startPos, length);
+                    CJWCoreTextLinkData *linkData = [[CJWCoreTextLinkData alloc] init];
+                    linkData.title = dict[@"content"];
+                    linkData.url = dict[@"url"];
+                    linkData.range = linkRange;
+                    [linkArray addObject:linkData];
+                    
                 }
             }
         }

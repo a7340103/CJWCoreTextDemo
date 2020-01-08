@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		2E64EB0323C5D11200932FF2 /* CJWCoreTextLinkData.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E64EB0223C5D11200932FF2 /* CJWCoreTextLinkData.m */; };
+		2E64EB0623C5D32500932FF2 /* CJWCoreTextUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E64EB0523C5D32500932FF2 /* CJWCoreTextUtils.m */; };
 		2EBE264D23C472480081191C /* UIView+frameAdjust.m in Sources */ = {isa = PBXBuildFile; fileRef = 2EBE264A23C472480081191C /* UIView+frameAdjust.m */; };
 		2EBE265023C4724F0081191C /* CJWCDisplayView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2EBE264F23C4724F0081191C /* CJWCDisplayView.m */; };
 		2EBE265723C472580081191C /* CJWCFrameParserConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = 2EBE265123C472580081191C /* CJWCFrameParserConfig.m */; };
@@ -28,6 +29,8 @@
 /* Begin PBXFileReference section */
 		2E64EB0123C5D11200932FF2 /* CJWCoreTextLinkData.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CJWCoreTextLinkData.h; sourceTree = "<group>"; };
 		2E64EB0223C5D11200932FF2 /* CJWCoreTextLinkData.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CJWCoreTextLinkData.m; sourceTree = "<group>"; };
+		2E64EB0423C5D32500932FF2 /* CJWCoreTextUtils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CJWCoreTextUtils.h; sourceTree = "<group>"; };
+		2E64EB0523C5D32500932FF2 /* CJWCoreTextUtils.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CJWCoreTextUtils.m; sourceTree = "<group>"; };
 		2EBE264923C472480081191C /* CommonDefine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommonDefine.h; sourceTree = "<group>"; };
 		2EBE264A23C472480081191C /* UIView+frameAdjust.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+frameAdjust.m"; sourceTree = "<group>"; };
 		2EBE264B23C472480081191C /* UIView+frameAdjust.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+frameAdjust.h"; sourceTree = "<group>"; };
@@ -140,6 +143,8 @@
 				7ABB423223C4C9CB003C8403 /* CJWCoreTextImageData.m */,
 				2E64EB0123C5D11200932FF2 /* CJWCoreTextLinkData.h */,
 				2E64EB0223C5D11200932FF2 /* CJWCoreTextLinkData.m */,
+				2E64EB0423C5D32500932FF2 /* CJWCoreTextUtils.h */,
+				2E64EB0523C5D32500932FF2 /* CJWCoreTextUtils.m */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -233,6 +238,7 @@
 				7ABB423323C4C9CB003C8403 /* CJWCoreTextImageData.m in Sources */,
 				2EC97C6D23C31E57006CE2D8 /* AppDelegate.m in Sources */,
 				2EBE265723C472580081191C /* CJWCFrameParserConfig.m in Sources */,
+				2E64EB0623C5D32500932FF2 /* CJWCoreTextUtils.m in Sources */,
 				2EBE264D23C472480081191C /* UIView+frameAdjust.m in Sources */,
 				2EC97C7E23C31E58006CE2D8 /* main.m in Sources */,
 				2EBE265023C4724F0081191C /* CJWCDisplayView.m in Sources */,

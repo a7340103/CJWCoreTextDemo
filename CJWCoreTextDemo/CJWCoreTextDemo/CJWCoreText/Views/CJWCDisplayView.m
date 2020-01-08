@@ -7,8 +7,10 @@
 //
 
 #import "CJWCDisplayView.h"
+#import "CJWCoreTextUtils.h"
 
-NSString *const CTDisplayViewImagePressedNotification = @"CTDisplayViewImagePressedNotification";
+NSString *const CTDisplayViewImagePressedNotification = @"CJWCDisplayViewImagePressedNotification";
+NSString *const CTDisplayViewLinkPressedNotification = @"CJWCDisplayViewLinkPressedNotification";
 
 
 @interface CJWCDisplayView()
@@ -58,6 +60,16 @@ NSString *const CTDisplayViewImagePressedNotification = @"CTDisplayViewImagePres
                                                                 object:self userInfo:userInfo];
             return;
         }
+    }
+    //点击链接
+    CJWCoreTextLinkData *linkData = [CJWCoreTextUtils touchLinkInView:self atPoint:point data:self.data];
+    if (linkData) {
+        NSLog(@"hint link!");
+        NSDictionary *userInfo = @{ @"linkData": linkData };
+        [[NSNotificationCenter defaultCenter] postNotificationName:CTDisplayViewLinkPressedNotification
+                                                            object:self userInfo:userInfo];
+        return;
+
     }
 }
 

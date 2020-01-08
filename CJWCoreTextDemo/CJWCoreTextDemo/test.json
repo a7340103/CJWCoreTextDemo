@@ -33,6 +33,11 @@
     "content" : "这在这里尝试放一个参考链接：",
     "type" : "txt"
   },
+  { "color" : "blue",
+    "content" : "链接文字",
+    "url" : "http://blog.devtang.com",
+    "type" : "link"
+  },
   { "color" : "default",
     "content" : "大家可以尝试点击一下",
     "type" : "txt"
