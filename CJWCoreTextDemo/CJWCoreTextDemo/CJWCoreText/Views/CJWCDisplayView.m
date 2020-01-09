@@ -9,6 +9,9 @@
 #import "CJWCDisplayView.h"
 #import "CJWCoreTextUtils.h"
 
+#define ANCHOR_TARGET_TAG 1
+
+
 NSString *const CTDisplayViewImagePressedNotification = @"CJWCDisplayViewImagePressedNotification";
 NSString *const CTDisplayViewLinkPressedNotification = @"CJWCDisplayViewLinkPressedNotification";
 
@@ -45,17 +48,56 @@ typedef enum CTDisplayViewState : NSInteger {
 }
 
 - (void)setupEvents {
+    //点击手势处理图片和链接
     UIGestureRecognizer * tapRecognizer =
           [[UITapGestureRecognizer alloc] initWithTarget:self
                     action:@selector(userTapGestureDetected:)];
     [self addGestureRecognizer:tapRecognizer];
     
+    //长按手势绘制锚点
     UIGestureRecognizer *longPressRecognizer = [[UILongPressGestureRecognizer alloc] initWithTarget:self
                                                                                              action:@selector(userLongPressedGuestureDetected:)];
     [self addGestureRecognizer:longPressRecognizer];
+    
+    //添加拖动手势处理锚点的拖动。
+    UIGestureRecognizer *panReconizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(userPanGuestureDetected:)];
+    [self addGestureRecognizer:panReconizer];
+    
     self.userInteractionEnabled = YES;
 
 }
+
+- (void)userPanGuestureDetected:(UIGestureRecognizer *)recognizer{
+    if (self.state == CTDisplayViewStateNormal) {
+        return;
+    }
+    CGPoint point = [recognizer locationInView:self];
+    if (recognizer.state == UIGestureRecognizerStateBegan) {
+        if (_leftSelectionAnchor && CGRectContainsPoint(CGRectInset(_leftSelectionAnchor.frame, -25, -6), point)) {
+            _leftSelectionAnchor.tag = ANCHOR_TARGET_TAG;
+        }else if (_rightSelectionAnchor && CGRectContainsPoint(CGRectInset(_rightSelectionAnchor.frame, -25, -6), point)){
+            _rightSelectionAnchor.tag = ANCHOR_TARGET_TAG;
+        }
+        
+    }else if (recognizer.state == UIGestureRecognizerStateChanged){
+        CFIndex idx = [CJWCoreTextUtils touchContentOffsetInView:self atPoint:point data:self.data];
+        if (idx == -1) {
+            return;
+        }
+        if (_leftSelectionAnchor.tag == ANCHOR_TARGET_TAG && idx < _selectionStartPosition) {
+            _selectionStartPosition = idx;
+        }else if (_rightSelectionAnchor.tag == ANCHOR_TARGET_TAG && idx > _selectionEndPosition){
+            _selectionEndPosition = idx;
+        }
+        
+    }else if (recognizer.state == UIGestureRecognizerStateEnded || recognizer.state == UIGestureRecognizerStateCancelled){
+        _leftSelectionAnchor.tag = 0;
+        _rightSelectionAnchor.tag = 0;
+    }
+    [self setNeedsDisplay];
+}
+
+
 - (void)userLongPressedGuestureDetected:(UILongPressGestureRecognizer *)recognizer {
     CGPoint point = [recognizer locationInView:self];
 //    debugLog(@"state = %d", recognizer.state);

@@ -62,8 +62,8 @@
             filePath = "../CJWCoreTextDemo/CJWCoreText/Views/CJWCDisplayView.m"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "212"
-            endingLineNumber = "212"
+            startingLineNumber = "251"
+            endingLineNumber = "251"
             landmarkName = "-drawAnchors"
             landmarkType = "7">
          </BreakpointContent>
@@ -78,8 +78,8 @@
             filePath = "../CJWCoreTextDemo/CJWCoreText/Views/CJWCDisplayView.m"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "195"
-            endingLineNumber = "195"
+            startingLineNumber = "234"
+            endingLineNumber = "234"
             landmarkName = "-drawAnchors"
             landmarkType = "7">
          </BreakpointContent>
@@ -94,9 +94,25 @@
             filePath = "../CJWCoreTextDemo/CJWCoreText/Views/CJWCDisplayView.m"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "201"
-            endingLineNumber = "201"
+            startingLineNumber = "240"
+            endingLineNumber = "240"
             landmarkName = "-drawAnchors"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "80DA9882-43A3-4DDD-A710-5FEFF7A1677F"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "../CJWCoreTextDemo/CJWCoreText/Views/CJWCDisplayView.m"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "73"
+            endingLineNumber = "73"
+            landmarkName = "-userPanGuestureDetected:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
