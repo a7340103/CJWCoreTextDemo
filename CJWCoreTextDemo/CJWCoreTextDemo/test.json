@@ -39,7 +39,7 @@
     "type" : "link"
   },
   { "color" : "default",
-    "content" : "大家可以尝试点击一下",
+    "content" : "name",
     "type" : "txt"
   }
 ]

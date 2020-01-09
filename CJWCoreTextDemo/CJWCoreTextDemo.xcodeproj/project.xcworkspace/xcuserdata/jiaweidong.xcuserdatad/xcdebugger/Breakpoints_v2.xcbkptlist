@@ -62,8 +62,8 @@
             filePath = "../CJWCoreTextDemo/CJWCoreText/Views/CJWCDisplayView.m"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "179"
-            endingLineNumber = "179"
+            startingLineNumber = "212"
+            endingLineNumber = "212"
             landmarkName = "-drawAnchors"
             landmarkType = "7">
          </BreakpointContent>
@@ -78,8 +78,8 @@
             filePath = "../CJWCoreTextDemo/CJWCoreText/Views/CJWCDisplayView.m"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "162"
-            endingLineNumber = "162"
+            startingLineNumber = "195"
+            endingLineNumber = "195"
             landmarkName = "-drawAnchors"
             landmarkType = "7">
          </BreakpointContent>
@@ -94,8 +94,8 @@
             filePath = "../CJWCoreTextDemo/CJWCoreText/Views/CJWCDisplayView.m"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "168"
-            endingLineNumber = "168"
+            startingLineNumber = "201"
+            endingLineNumber = "201"
             landmarkName = "-drawAnchors"
             landmarkType = "7">
          </BreakpointContent>

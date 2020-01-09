@@ -64,9 +64,9 @@ typedef enum CTDisplayViewState : NSInteger {
         CFIndex index = [CJWCoreTextUtils touchContentOffsetInView:self atPoint:point data:self.data];
         if (index != -1 && index < self.data.content.length) {//[0,168] 合理的范围应该在[0,167]
             debugLog(@"index = %d", index);
-            debugLog(@"endindex = %d",index+2);
+            debugLog(@"endindex = %d",index+1);
             _selectionStartPosition = index;
-            _selectionEndPosition = index+2;
+            _selectionEndPosition = index+1;
         }
         self.state = CTDisplayViewStateTouching;
     }else{
@@ -143,7 +143,40 @@ typedef enum CTDisplayViewState : NSInteger {
     if (_selectionStartPosition < 0 || _selectionEndPosition > self.data.content.length) {
         return;
     }
-    
+    CTFrameRef textFrame = self.data.ctFrame;
+    CFArrayRef lines = CTFrameGetLines(textFrame);
+    if (!lines) {
+        return;
+    }
+    CFIndex count = CFArrayGetCount(lines);
+    // 获得每一行的origin坐标
+    CGPoint origins[count];
+    CTFrameGetLineOrigins(textFrame, CFRangeMake(0, 0), origins);
+    for (int i = 0; i < count; i++) {
+        CGPoint linePoint = origins[i];
+        CTLineRef line = CFArrayGetValueAtIndex(lines, i);
+        CFRange range = CTLineGetStringRange(line);
+        // 1. start和end在一个line,则直接弄完break
+        if ([self isPosition:_selectionStartPosition inRange:range] && [self isPosition:_selectionEndPosition inRange:range]) {
+            CGFloat ascent, descent, leading, offset, offset2;
+            offset = CTLineGetOffsetForStringIndex(line, _selectionStartPosition, NULL);
+            offset2 = CTLineGetOffsetForStringIndex(line, _selectionEndPosition, NULL);
+            CTLineGetTypographicBounds(line, &ascent, &descent, &leading);
+            CGRect lineRect = CGRectMake(linePoint.x + offset, linePoint.y - descent, offset2 - offset, ascent+descent);
+            [self fillSelectionAreaInRect:lineRect];
+            break;
+        }
+
+        
+    }
+}
+
+- (void)fillSelectionAreaInRect:(CGRect)rect {
+
+    UIColor *bgColor = RGB(204, 221, 236);
+    CGContextRef context = UIGraphicsGetCurrentContext();
+    CGContextSetFillColorWithColor(context, bgColor.CGColor);
+    CGContextFillRect(context, rect);
 }
 
 - (void)drawAnchors{
