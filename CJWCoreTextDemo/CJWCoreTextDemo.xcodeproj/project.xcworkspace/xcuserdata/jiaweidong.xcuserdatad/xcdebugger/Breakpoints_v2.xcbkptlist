@@ -55,32 +55,48 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "49B3E869-AF8D-47FD-918E-AD5B1EA14FFB"
+            uuid = "4E2E3818-6B89-4B61-8B4D-98DAB8924C83"
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "../CJWCoreTextDemo/CJWCoreText/Models/CJWCoreTextUtils.m"
+            filePath = "../CJWCoreTextDemo/CJWCoreText/Views/CJWCDisplayView.m"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "16"
-            endingLineNumber = "16"
-            landmarkName = "+touchLinkInView:atPoint:data:"
+            startingLineNumber = "179"
+            endingLineNumber = "179"
+            landmarkName = "-drawAnchors"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "01CA9B3E-BBFD-46C6-8B44-FB8648BC5882"
+            uuid = "D9137575-8296-4F5D-B1DE-E2DF40A39FB0"
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "../CJWCoreTextDemo/CJWCoreText/Models/CJWCFrameParser.m"
+            filePath = "../CJWCoreTextDemo/CJWCoreText/Views/CJWCDisplayView.m"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "108"
-            endingLineNumber = "108"
-            landmarkName = "+loadTemplateFile:config:imageArray:linkArray:"
+            startingLineNumber = "162"
+            endingLineNumber = "162"
+            landmarkName = "-drawAnchors"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "5F10D359-FCA7-4CB7-B79A-028C4C075B49"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "../CJWCoreTextDemo/CJWCoreText/Views/CJWCDisplayView.m"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "168"
+            endingLineNumber = "168"
+            landmarkName = "-drawAnchors"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

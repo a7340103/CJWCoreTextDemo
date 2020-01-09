@@ -66,6 +66,7 @@
     CJWCoreTextData *data = [self parseAttributedContent:content config:config];
     data.imageArray = imageArray;
     data.linkArray = linkArray;
+    data.content = content;
     return data;
 }
 // 方法二

@@ -58,11 +58,13 @@ typedef enum CTDisplayViewState : NSInteger {
 }
 - (void)userLongPressedGuestureDetected:(UILongPressGestureRecognizer *)recognizer {
     CGPoint point = [recognizer locationInView:self];
-    debugLog(@"state = %d", recognizer.state);
-    debugLog(@"point = %@", NSStringFromCGPoint(point));
+//    debugLog(@"state = %d", recognizer.state);
+//    debugLog(@"point = %@", NSStringFromCGPoint(point));
     if (recognizer.state == UIGestureRecognizerStateBegan || recognizer.state == UIGestureRecognizerStateChanged) {
         CFIndex index = [CJWCoreTextUtils touchContentOffsetInView:self atPoint:point data:self.data];
-        if (index != -1 && index < self.data.content.length) {
+        if (index != -1 && index < self.data.content.length) {//[0,168] 合理的范围应该在[0,167]
+            debugLog(@"index = %d", index);
+            debugLog(@"endindex = %d",index+2);
             _selectionStartPosition = index;
             _selectionEndPosition = index+2;
         }
@@ -122,7 +124,7 @@ typedef enum CTDisplayViewState : NSInteger {
     CGContextScaleCTM(context, 1.0, -1.0);
 
     if (self.state == CTDisplayViewStateTouching || self.state == CTDisplayViewStateSelecting) {
-//        [self drawSelectionArea];
+        [self drawSelectionArea];
         [self drawAnchors];
     }
     
@@ -137,8 +139,58 @@ typedef enum CTDisplayViewState : NSInteger {
     }
 }
 
-- (void)drawAnchors{
+- (void)drawSelectionArea{
+    if (_selectionStartPosition < 0 || _selectionEndPosition > self.data.content.length) {
+        return;
+    }
     
+}
+
+- (void)drawAnchors{
+    if (_selectionStartPosition < 0 || _selectionEndPosition > self.data.content.length) {
+        return;
+    }
+    // 翻转坐标系
+    CGAffineTransform transform =  CGAffineTransformMakeTranslation(0, self.bounds.size.height);
+    transform = CGAffineTransformScale(transform, 1.f, -1.f);
+    
+    CTFrameRef frameRef = self.data.ctFrame;
+    NSArray *linesArray = (NSArray *) CTFrameGetLines(frameRef);
+    NSInteger lineCount = linesArray.count;
+    CGPoint point[lineCount];
+    CTFrameGetLineOrigins(frameRef, CFRangeMake(0, 0), point);
+    for (NSInteger i = 0; i<lineCount; i++) {
+        CGPoint linePoint = point[i];
+        CTLineRef lineRef = (__bridge CTLineRef)(linesArray[i]);
+        CFRange range = CTLineGetStringRange(lineRef);
+        
+        if ([self isPosition:_selectionStartPosition inRange:range]) {
+            CGFloat ascent, descent, leading, offset;
+            offset = CTLineGetOffsetForStringIndex(lineRef, _selectionStartPosition, NULL);
+            CTLineGetTypographicBounds(lineRef, &ascent, &descent, &leading);
+            CGPoint originPoint = CGPointMake(linePoint.x + offset - 5, linePoint.y + ascent + 11);
+            originPoint = CGPointApplyAffineTransform(originPoint, transform);
+            self.leftSelectionAnchor.origin = originPoint;
+        }
+        if ([self isPosition:_selectionEndPosition inRange:range]) {
+            CGFloat ascent, descent, leading, offset;
+            offset = CTLineGetOffsetForStringIndex(lineRef, _selectionEndPosition, NULL);
+            CTLineGetTypographicBounds(lineRef, &ascent, &descent, &leading);
+            CGPoint originPoint = CGPointMake(linePoint.x + offset - 5, linePoint.y + ascent + 11);
+            originPoint = CGPointApplyAffineTransform(originPoint, transform);
+            self.rightSelectionAnchor.origin = originPoint;
+        }
+        
+    }
+}
+
+
+- (BOOL)isPosition:(NSInteger)position inRange:(CFRange)range {
+    if (position >= range.location && position <= range.location + range.length) {
+        return YES;
+    } else {
+        return NO;
+    }
 }
 
 //根据触摸状态设置不同的东西
@@ -158,6 +210,7 @@ typedef enum CTDisplayViewState : NSInteger {
     }else if (_state == CTDisplayViewStateSelecting){
         
     }
+    [self setNeedsDisplay];
 }
 
 #pragma mark - 设置游标
