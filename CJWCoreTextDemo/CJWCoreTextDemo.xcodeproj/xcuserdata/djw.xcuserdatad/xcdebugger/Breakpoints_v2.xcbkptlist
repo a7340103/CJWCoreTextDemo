@@ -10,12 +10,44 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "CJWCoreTextDemo/CJWCoreText/Views/CJWCDisplayView.m"
-            timestampString = "600190080.858533"
+            timestampString = "600270846.226743"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "69"
-            endingLineNumber = "69"
-            landmarkName = "-userLongPressedGuestureDetected:"
+            startingLineNumber = "71"
+            endingLineNumber = "71"
+            landmarkName = "CJWCDisplayView"
+            landmarkType = "3">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "CJWCoreTextDemo/CJWCoreText/Views/CJWCDisplayView.m"
+            timestampString = "600270846.227281"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "345"
+            endingLineNumber = "345"
+            landmarkName = "-isPosition:inRange:"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "CJWCoreTextDemo/CJWCoreText/Models/CJWCoreTextUtils.m"
+            timestampString = "600267325.2824759"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "16"
+            endingLineNumber = "16"
+            landmarkName = "+touchLinkInView:atPoint:data:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

@@ -8,6 +8,7 @@
 
 #import "CJWCDisplayView.h"
 #import "CJWCoreTextUtils.h"
+#import "CJWCustomToolView.h"
 
 #define ANCHOR_TARGET_TAG 1
 
@@ -27,6 +28,7 @@ typedef enum CTDisplayViewState : NSInteger {
 @property (nonatomic) CTDisplayViewState state;
 @property (strong, nonatomic) UIImageView *leftSelectionAnchor;
 @property (strong, nonatomic) UIImageView *rightSelectionAnchor;
+@property (strong, nonatomic) CJWCustomToolView *toolView;
 @end
 
 
@@ -93,6 +95,7 @@ typedef enum CTDisplayViewState : NSInteger {
     }else if (recognizer.state == UIGestureRecognizerStateEnded || recognizer.state == UIGestureRecognizerStateCancelled){
         _leftSelectionAnchor.tag = 0;
         _rightSelectionAnchor.tag = 0;
+        [self showToolView];
     }
     [self setNeedsDisplay];
 }
@@ -105,49 +108,108 @@ typedef enum CTDisplayViewState : NSInteger {
     if (recognizer.state == UIGestureRecognizerStateBegan || recognizer.state == UIGestureRecognizerStateChanged) {
         CFIndex index = [CJWCoreTextUtils touchContentOffsetInView:self atPoint:point data:self.data];
         if (index != -1 && index < self.data.content.length) {//[0,168] 合理的范围应该在[0,167]
-            debugLog(@"index = %d", index);
-            debugLog(@"endindex = %d",index+1);
+//            debugLog(@"index = %d", index);
+//            debugLog(@"endindex = %d",index+2);
             _selectionStartPosition = index;
-            _selectionEndPosition = index+1;
+            _selectionEndPosition = index+2;
         }
         self.state = CTDisplayViewStateTouching;
     }else{
         if (_selectionStartPosition >= 0 && _selectionEndPosition <= self.data.content.length) {
             self.state = CTDisplayViewStateSelecting;
+            [self showToolView];
         }else{
             self.state = CTDisplayViewStateNormal;
         }
     }
 }
 
-- (void)userTapGestureDetected:(UIGestureRecognizer *)recognizer {
-    CGPoint point = [recognizer locationInView:self];
-    for (CJWCoreTextImageData * imageData in self.data.imageArray) {
-        // 翻转坐标系，因为 imageData 中的坐标是 CoreText 的坐标系
-        CGRect imageRect = imageData.imagePosition;
-        CGPoint imagePosition = imageRect.origin;
-        imagePosition.y = self.bounds.size.height - imageRect.origin.y
-                          - imageRect.size.height;
-        CGRect rect = CGRectMake(imagePosition.x, imagePosition.y, imageRect.size.width, imageRect.size.height);
-        // 检测点击位置 Point 是否在 rect 之内
-        if (CGRectContainsPoint(rect, point)) {
-            // 在这里处理点击后的逻辑
-            NSLog(@"bingo");
-            NSDictionary *userInfo = @{ @"imageData": imageData };
-            [[NSNotificationCenter defaultCenter] postNotificationName:CTDisplayViewImagePressedNotification
-                                                                object:self userInfo:userInfo];
-            return;
+- (CGRect)getToolViewRect{
+    if (_selectionStartPosition < 0 || _selectionEndPosition > self.data.content.length) {
+        return CGRectZero;
+    }
+    CTFrameRef textFrame = self.data.ctFrame;
+    CFArrayRef lines = CTFrameGetLines(textFrame);
+    if (!lines) {
+        return CGRectZero;
+    }
+    CFIndex count = CFArrayGetCount(lines);
+    // 获得每一行的origin坐标
+    CGPoint origins[count];
+    CTFrameGetLineOrigins(textFrame, CFRangeMake(0,0), origins);
+    CGRect resultRect = CGRectZero;
+
+    // 2. start和end不在一个line
+    // 2. start和end不在一个line
+    for (int i = 0; i < count; i++) {
+        CGPoint linePoint = origins[i];
+        CTLineRef line = CFArrayGetValueAtIndex(lines, i);
+        CFRange range = CTLineGetStringRange(line);
+        // 如果start在line中，则记录当前为起始行
+        if ([self isPosition:_selectionStartPosition inRange:range]) {
+            CGFloat ascent, descent, leading;
+            CTLineGetTypographicBounds(line, &ascent, &descent, &leading);
+            if (i > 0) {
+                CGRect lineRect = CGRectMake(15, linePoint.y - descent+30, 300, 30);
+                resultRect = lineRect;
+                return  resultRect;
+            }else{
+
+                CGRect lineRect = CGRectMake(15, linePoint.y+ascent-30, 300, 30);
+                resultRect = lineRect;
+                return  resultRect;
+            }
         }
     }
-    //点击链接
-    CJWCoreTextLinkData *linkData = [CJWCoreTextUtils touchLinkInView:self atPoint:point data:self.data];
-    if (linkData) {
-        NSLog(@"hint link!");
-        NSDictionary *userInfo = @{ @"linkData": linkData };
-        [[NSNotificationCenter defaultCenter] postNotificationName:CTDisplayViewLinkPressedNotification
-                                                            object:self userInfo:userInfo];
-        return;
+    return CGRectZero;
+}
 
+- (void)showToolView{
+    CGRect selectionRect = [self getToolViewRect];
+    // 翻转坐标系
+    CGAffineTransform transform =  CGAffineTransformMakeTranslation(0, self.bounds.size.height);
+    transform = CGAffineTransformScale(transform, 1.f, -1.f);
+    selectionRect = CGRectApplyAffineTransform(selectionRect, transform);
+    self.toolView.frame = selectionRect;
+    self.toolView.hidden = NO;
+}
+
+- (void)hideToolView{
+    self.toolView.hidden = YES;
+}
+
+- (void)userTapGestureDetected:(UIGestureRecognizer *)recognizer {
+    CGPoint point = [recognizer locationInView:self];
+    if (self.state == CTDisplayViewStateNormal) {
+        for (CJWCoreTextImageData * imageData in self.data.imageArray) {
+            // 翻转坐标系，因为 imageData 中的坐标是 CoreText 的坐标系
+            CGRect imageRect = imageData.imagePosition;
+            CGPoint imagePosition = imageRect.origin;
+            imagePosition.y = self.bounds.size.height - imageRect.origin.y
+            - imageRect.size.height;
+            CGRect rect = CGRectMake(imagePosition.x, imagePosition.y, imageRect.size.width, imageRect.size.height);
+            // 检测点击位置 Point 是否在 rect 之内
+            if (CGRectContainsPoint(rect, point)) {
+                // 在这里处理点击后的逻辑
+                NSLog(@"bingo");
+                NSDictionary *userInfo = @{ @"imageData": imageData };
+                [[NSNotificationCenter defaultCenter] postNotificationName:CTDisplayViewImagePressedNotification
+                                                                    object:self userInfo:userInfo];
+                return;
+            }
+        }
+        //点击链接
+        CJWCoreTextLinkData *linkData = [CJWCoreTextUtils touchLinkInView:self atPoint:point data:self.data];
+        if (linkData) {
+            NSLog(@"hint link!");
+            NSDictionary *userInfo = @{ @"linkData": linkData };
+            [[NSNotificationCenter defaultCenter] postNotificationName:CTDisplayViewLinkPressedNotification
+                                                                object:self userInfo:userInfo];
+            return;
+            
+        }
+    }else{
+        self.state = CTDisplayViewStateNormal;
     }
 }
 
@@ -208,7 +270,26 @@ typedef enum CTDisplayViewState : NSInteger {
             [self fillSelectionAreaInRect:lineRect];
             break;
         }
-
+        // 2. start和end不在一个line
+        // 2.1 如果start在line中，则填充Start后面部分区域
+        if ([self isPosition:_selectionStartPosition inRange:range]) {
+            CGFloat ascent, descent, leading, offset, width;
+            offset = CTLineGetOffsetForStringIndex(line, _selectionStartPosition, NULL);
+            width = CTLineGetTypographicBounds(line, &ascent, &descent, &leading);
+            CGRect lineRect = CGRectMake(linePoint.x + offset, linePoint.y - descent,width - offset, ascent+descent);
+            [self fillSelectionAreaInRect:lineRect];
+        }else if (_selectionStartPosition < range.location && _selectionEndPosition >= range.location + range.length){
+            CGFloat ascent, descent, leading, width;
+            width = CTLineGetTypographicBounds(line, &ascent, &descent, &leading);
+            CGRect lineRect = CGRectMake(linePoint.x, linePoint.y - descent,width, ascent+descent);
+            [self fillSelectionAreaInRect:lineRect];
+        }else if(_selectionStartPosition < range.location && [self isPosition:_selectionEndPosition inRange:range]){
+            CGFloat ascent, descent, leading, offset, width;
+            offset = CTLineGetOffsetForStringIndex(line, _selectionEndPosition, NULL);
+            width = CTLineGetTypographicBounds(line, &ascent, &descent, &leading);
+            CGRect lineRect = CGRectMake(linePoint.x, linePoint.y - descent,offset, ascent+descent);
+            [self fillSelectionAreaInRect:lineRect];
+        }
         
     }
 }
@@ -276,16 +357,30 @@ typedef enum CTDisplayViewState : NSInteger {
     _state = state;
     
     if (_state == CTDisplayViewStateNormal) {
-        
+        _selectionStartPosition = -1;
+        _selectionEndPosition = -1;
+        [self removeSelectionAnchor];
+        [self hideToolView];
     }else if (_state == CTDisplayViewStateTouching){
         if (_leftSelectionAnchor == nil && _rightSelectionAnchor == nil) {
             [self setupAnchors];
         }
         
     }else if (_state == CTDisplayViewStateSelecting){
-        
+        [self showToolView];
     }
     [self setNeedsDisplay];
+}
+
+- (void)removeSelectionAnchor {
+    if (_leftSelectionAnchor) {
+        [_leftSelectionAnchor removeFromSuperview];
+        _leftSelectionAnchor = nil;
+    }
+    if (_rightSelectionAnchor) {
+        [_rightSelectionAnchor removeFromSuperview];
+        _rightSelectionAnchor = nil;
+    }
 }
 
 #pragma mark - 设置游标
@@ -335,6 +430,19 @@ typedef enum CTDisplayViewState : NSInteger {
     UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
     return image;
+}
+
+#pragma mark -lazy
+- (CJWCustomToolView *)toolView{
+    if (!_toolView) {
+        
+        CGRect rect = self.bounds;
+        rect.size.width = [UIApplication sharedApplication].keyWindow.bounds.size.width - 30;
+        rect.size.height = 50;
+        _toolView = [[CJWCustomToolView alloc] initWithFrame:rect];
+        [self addSubview:_toolView];
+    }
+    return _toolView;
 }
 
 @end
