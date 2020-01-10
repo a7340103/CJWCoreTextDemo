@@ -86,9 +86,9 @@ typedef enum CTDisplayViewState : NSInteger {
         if (idx == -1) {
             return;
         }
-        if (_leftSelectionAnchor.tag == ANCHOR_TARGET_TAG && idx < _selectionStartPosition) {
+        if (_leftSelectionAnchor.tag == ANCHOR_TARGET_TAG && idx < _selectionEndPosition) {
             _selectionStartPosition = idx;
-        }else if (_rightSelectionAnchor.tag == ANCHOR_TARGET_TAG && idx > _selectionEndPosition){
+        }else if (_rightSelectionAnchor.tag == ANCHOR_TARGET_TAG && idx > _selectionStartPosition){
             _selectionEndPosition = idx;
         }
         
