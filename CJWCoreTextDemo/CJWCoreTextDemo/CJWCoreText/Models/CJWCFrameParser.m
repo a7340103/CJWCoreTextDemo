@@ -78,14 +78,25 @@
                                                          options:NSJSONReadingAllowFragments
                                                            error:nil];
         if ([array isKindOfClass:[NSArray class]]) {
-            for (NSDictionary *dict in array) {
+            for(NSInteger i = 0; i < array.count; i++) {
+                NSDictionary *dict = array[i];
                 NSString *type = dict[@"type"];
                 if ([type isEqualToString:@"txt"]) {
+                    if ([dict objectForKey:@"algin"] && i > 0) {
+                         //拼接换行
+                         [self appendPreLineStr:result];
+                    }
                     NSAttributedString *as =
                     [self parseAttributedContentFromNSDictionary:dict
                                                           config:config];
                     [result appendAttributedString:as];
+                    if ([dict objectForKey:@"algin"] && i > 0) {
+                         //拼接换行
+                         [self appendNewLineStr:i lineCount:array.count content:result];
+                    }
                 }else if ([type isEqualToString:@"img"]){
+                    //拼接换行
+                    [self appendPreLineStr:result];
                     // 创建 CoreTextImageData
                     CJWCoreTextImageData *imageData = [[CJWCoreTextImageData alloc] init];
                     imageData.name = dict[@"name"];
@@ -94,6 +105,8 @@
                     // 创建空白占位符，并且设置它的 CTRunDelegate 信息
                     NSAttributedString *as = [self parseImageDataFromNSDictionary:dict config:config];
                     [result appendAttributedString:as];
+                    //拼接换行
+                    [self appendNewLineStr:i lineCount:array.count content:result];
                 }else if ([type isEqualToString:@"link"]){
                     NSUInteger startPos = result.length;
                     NSAttributedString *as =
@@ -129,6 +142,20 @@
         CTFontRef fontRef = CTFontCreateWithName((CFStringRef)@"ArialMT", fontSize, NULL);
         attributes[(id)kCTFontAttributeName] = (__bridge id)fontRef;
         CFRelease(fontRef);
+    }
+    //set algin
+    if ([dict objectForKey:@"align"]) {
+        NSDictionary *alignDic = @{@"left":@"0",@"right":@"1",@"center":@"2"};
+        NSString *align = [alignDic objectForKey:[dict objectForKey:@"align"]];
+        if (!align.length) {
+            NSInteger alignIndex = [align integerValue];
+            CTTextAlignment alignment = alignIndex;
+//            CTParagraphStyleSetting alignmentStyle;
+//            alignmentStyle.spec=kCTParagraphStyleSpecifierAlignment;//指定为对齐属性
+//            alignmentStyle.valueSize=sizeof(alignment);
+//            alignmentStyle.value=&alignment;
+//            attributes[(id)kCTParagraphStyleAttributeName] = (__bridge id)alignmentStyle;
+        }
     }
     NSString *content = dict[@"content"];
     return [[NSAttributedString alloc] initWithString:content attributes:attributes];
@@ -210,6 +237,20 @@ static CGFloat widthCallback(void* ref){
     CFAttributedStringSetAttribute((CFMutableAttributedStringRef)space, CFRangeMake(0, 1), kCTRunDelegateAttributeName, delegate);
     CFRelease(delegate);
     return space;
+}
+
++ (void)appendPreLineStr:(NSMutableAttributedString *)result{
+    NSAttributedString *newline = [[NSAttributedString alloc] initWithString:@"\n"];
+    if (result.length) {
+        [result appendAttributedString:newline];
+    }
+}
+
++ (void)appendNewLineStr:(NSInteger)idx lineCount:(NSInteger)lineCount content:(NSMutableAttributedString *)result{
+    NSAttributedString *newline = [[NSAttributedString alloc] initWithString:@"\n"];
+    if (idx < lineCount - 1) {
+        [result appendAttributedString:newline];
+    }
 }
 
 
