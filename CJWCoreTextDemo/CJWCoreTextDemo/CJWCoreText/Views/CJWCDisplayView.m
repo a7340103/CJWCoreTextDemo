@@ -105,6 +105,9 @@ typedef enum CTDisplayViewState : NSInteger {
     CGPoint point = [recognizer locationInView:self];
 //    debugLog(@"state = %d", recognizer.state);
 //    debugLog(@"point = %@", NSStringFromCGPoint(point));
+    if ([self touchPointIsInLink:point] || [self touchPointIsInImage:point]) {
+        return;
+    }
     if (recognizer.state == UIGestureRecognizerStateBegan || recognizer.state == UIGestureRecognizerStateChanged) {
         CFIndex index = [CJWCoreTextUtils touchContentOffsetInView:self atPoint:point data:self.data];
         if (index != -1 && index < self.data.content.length) {//[0,168] 合理的范围应该在[0,167]
@@ -178,35 +181,48 @@ typedef enum CTDisplayViewState : NSInteger {
     self.toolView.hidden = YES;
 }
 
+- (BOOL)touchPointIsInImage:(CGPoint)point{
+    for (CJWCoreTextImageData * imageData in self.data.imageArray) {
+        // 翻转坐标系，因为imageData中的坐标是CoreText的坐标系
+        CGRect imageRect = imageData.imagePosition;
+        CGPoint imagePosition = imageRect.origin;
+        imagePosition.y = self.bounds.size.height - imageRect.origin.y - imageRect.size.height;
+        CGRect rect = CGRectMake(imagePosition.x, imagePosition.y, imageRect.size.width, imageRect.size.height);
+        // 检测点击位置 Point 是否在rect之内
+        if (CGRectContainsPoint(rect, point)) {
+            NSLog(@"hint image");
+            // 在这里处理点击后的逻辑
+            NSDictionary *userInfo = @{ @"imageData": imageData };
+            [[NSNotificationCenter defaultCenter] postNotificationName:CTDisplayViewImagePressedNotification
+                                                                object:self userInfo:userInfo];
+            return YES;
+        }
+    }
+    return NO;
+}
+
+- (BOOL)touchPointIsInLink:(CGPoint)point{
+    CJWCoreTextLinkData *linkData = [CJWCoreTextUtils touchLinkInView:self atPoint:point data:self.data];
+    if (linkData) {
+        NSLog(@"hint link!");
+        NSDictionary *userInfo = @{ @"linkData": linkData };
+        [[NSNotificationCenter defaultCenter] postNotificationName:CTDisplayViewLinkPressedNotification
+                                                            object:self userInfo:userInfo];
+        return YES;
+    }
+    return NO;
+}
+
+
 - (void)userTapGestureDetected:(UIGestureRecognizer *)recognizer {
     CGPoint point = [recognizer locationInView:self];
     if (self.state == CTDisplayViewStateNormal) {
-        for (CJWCoreTextImageData * imageData in self.data.imageArray) {
-            // 翻转坐标系，因为 imageData 中的坐标是 CoreText 的坐标系
-            CGRect imageRect = imageData.imagePosition;
-            CGPoint imagePosition = imageRect.origin;
-            imagePosition.y = self.bounds.size.height - imageRect.origin.y
-            - imageRect.size.height;
-            CGRect rect = CGRectMake(imagePosition.x, imagePosition.y, imageRect.size.width, imageRect.size.height);
-            // 检测点击位置 Point 是否在 rect 之内
-            if (CGRectContainsPoint(rect, point)) {
-                // 在这里处理点击后的逻辑
-                NSLog(@"bingo");
-                NSDictionary *userInfo = @{ @"imageData": imageData };
-                [[NSNotificationCenter defaultCenter] postNotificationName:CTDisplayViewImagePressedNotification
-                                                                    object:self userInfo:userInfo];
-                return;
-            }
-        }
-        //点击链接
-        CJWCoreTextLinkData *linkData = [CJWCoreTextUtils touchLinkInView:self atPoint:point data:self.data];
-        if (linkData) {
-            NSLog(@"hint link!");
-            NSDictionary *userInfo = @{ @"linkData": linkData };
-            [[NSNotificationCenter defaultCenter] postNotificationName:CTDisplayViewLinkPressedNotification
-                                                                object:self userInfo:userInfo];
+        if ([self touchPointIsInImage:point]) {
             return;
-            
+        }
+        
+        if ([self touchPointIsInLink:point]) {
+            return;
         }
     }else{
         self.state = CTDisplayViewStateNormal;
