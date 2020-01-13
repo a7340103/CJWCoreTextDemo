@@ -147,14 +147,17 @@
     if ([dict objectForKey:@"align"]) {
         NSDictionary *alignDic = @{@"left":@"0",@"right":@"1",@"center":@"2"};
         NSString *align = [alignDic objectForKey:[dict objectForKey:@"align"]];
-        if (!align.length) {
+        if (align.length) {
             NSInteger alignIndex = [align integerValue];
             CTTextAlignment alignment = alignIndex;
-//            CTParagraphStyleSetting alignmentStyle;
-//            alignmentStyle.spec=kCTParagraphStyleSpecifierAlignment;//指定为对齐属性
-//            alignmentStyle.valueSize=sizeof(alignment);
-//            alignmentStyle.value=&alignment;
-//            attributes[(id)kCTParagraphStyleAttributeName] = (__bridge id)alignmentStyle;
+            CTParagraphStyleSetting alignmentStyle;
+            alignmentStyle.spec=kCTParagraphStyleSpecifierAlignment;//指定为对齐属性
+            alignmentStyle.valueSize=sizeof(alignment);
+            alignmentStyle.value=&alignment;
+            CTParagraphStyleRef paragrapStyle = CTParagraphStyleCreate(&alignmentStyle, sizeof(alignmentStyle ));
+            attributes[(id)kCTParagraphStyleAttributeName] = (__bridge id)paragrapStyle;
+            CFRelease(paragrapStyle);
+            
         }
     }
     NSString *content = dict[@"content"];
