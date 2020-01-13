@@ -238,7 +238,12 @@ typedef enum CTDisplayViewState : NSInteger {
     for (CJWCoreTextImageData * imageData in self.data.imageArray) {
         UIImage *image = [UIImage imageNamed:imageData.name];
         if (image) {
-            CGContextDrawImage(context, imageData.imagePosition, image.CGImage);
+            if (CGRectIsEmpty(imageData.imageMidPostion)) {
+                CGRect rect = imageData.imagePosition;
+                rect.origin.x = (self.width - rect.size.width) / 2;
+                imageData.imageMidPostion = rect;
+            }
+            CGContextDrawImage(context, imageData.imageMidPostion, image.CGImage);
         }
     }
 }

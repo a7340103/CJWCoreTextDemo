@@ -16,6 +16,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 // 此坐标是 CoreText 的坐标系，而不是UIKit的坐标系
 @property (nonatomic) CGRect imagePosition;
+
+//图片居中显示的CoreText 的坐标
+@property (nonatomic) CGRect imageMidPostion;
 @end
 
 NS_ASSUME_NONNULL_END

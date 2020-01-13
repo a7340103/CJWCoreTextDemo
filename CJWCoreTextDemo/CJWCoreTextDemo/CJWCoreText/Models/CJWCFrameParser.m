@@ -149,20 +149,31 @@
         NSString *align = [alignDic objectForKey:[dict objectForKey:@"align"]];
         if (align.length) {
             NSInteger alignIndex = [align integerValue];
-            CTTextAlignment alignment = alignIndex;
-            CTParagraphStyleSetting alignmentStyle;
-            alignmentStyle.spec=kCTParagraphStyleSpecifierAlignment;//指定为对齐属性
-            alignmentStyle.valueSize=sizeof(alignment);
-            alignmentStyle.value=&alignment;
-            CTParagraphStyleRef paragrapStyle = CTParagraphStyleCreate(&alignmentStyle, sizeof(alignmentStyle ));
-            attributes[(id)kCTParagraphStyleAttributeName] = (__bridge id)paragrapStyle;
-            CFRelease(paragrapStyle);
+            [self setAlign:attributes alignment:alignIndex];
             
         }
+    }
+    //设置图片居中绘制
+    if ([[dict objectForKey:@"type"] isEqualToString:@"img"]) {
+        [self setAlign:attributes alignment:2];
     }
     NSString *content = dict[@"content"];
     return [[NSAttributedString alloc] initWithString:content attributes:attributes];
 }
+
++ (void)setAlign:(NSMutableDictionary *)attributes alignment:(NSInteger)alignIndex{
+    NSParameterAssert(attributes);
+    NSParameterAssert(alignIndex);
+    CTTextAlignment alignment = alignIndex;
+    CTParagraphStyleSetting alignmentStyle;
+    alignmentStyle.spec=kCTParagraphStyleSpecifierAlignment;//指定为对齐属性
+    alignmentStyle.valueSize=sizeof(alignment);
+    alignmentStyle.value=&alignment;
+    CTParagraphStyleRef paragrapStyle = CTParagraphStyleCreate(&alignmentStyle, sizeof(alignmentStyle ));
+    attributes[(id)kCTParagraphStyleAttributeName] = (__bridge id)paragrapStyle;
+    CFRelease(paragrapStyle);
+}
+
 // 方法四
 + (UIColor *)colorFromTemplate:(NSString *)name {
     if ([name isEqualToString:@"blue"]) {
