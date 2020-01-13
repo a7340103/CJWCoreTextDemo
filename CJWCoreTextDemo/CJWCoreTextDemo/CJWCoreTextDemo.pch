@@ -16,6 +16,7 @@
     #import <Foundation/Foundation.h>
     #import "CoreText/CoreText.h"
     #import "UIView+frameAdjust.h"
+    #import <SDWebImage/SDWebImage.h>
 #endif
 
 #ifdef DEBUG

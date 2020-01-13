@@ -1,7 +1,14 @@
-[ {
+[
+  {
+  "type" : "img",
+  "width" : 198,
+  "height" : 200,
+  "name" : "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1578917443919&di=d5e83e4816c6729e84b13e11520a25ed&imgtype=jpg&src=http%3A%2F%2Fimg1.imgtn.bdimg.com%2Fit%2Fu%3D2288950241%2C3249198710%26fm%3D214%26gp%3D0.jpg"
+  },
+  {
     "type" : "img",
-    "width" : 300,
-    "height" : 160,
+    "width" : 198,
+    "height" : 200,
     "name" : "coretext-image-1.jpg"
   },
   { "color" : "blue",

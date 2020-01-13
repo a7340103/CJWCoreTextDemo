@@ -251,15 +251,38 @@ typedef enum CTDisplayViewState : NSInteger {
     if (self.data) {
         CTFrameDraw(self.data.ctFrame, context);
     }
+    [self drawImages:context];
+}
+
+- (void)drawImageimmediately:(UIImage *)image data:(CJWCoreTextImageData *)imageData context:(CGContextRef)context{
+    if (CGRectIsEmpty(imageData.imageMidPostion)) {
+        CGRect rect = imageData.imagePosition;
+        rect.origin.x = (self.width - rect.size.width) / 2;
+        imageData.imageMidPostion = rect;
+    }
+    CGContextDrawImage(context, imageData.imageMidPostion, image.CGImage);
+}
+
+- (void)drawImages:(CGContextRef)context{
     for (CJWCoreTextImageData * imageData in self.data.imageArray) {
-        UIImage *image = [UIImage imageNamed:imageData.name];
-        if (image) {
-            if (CGRectIsEmpty(imageData.imageMidPostion)) {
-                CGRect rect = imageData.imagePosition;
-                rect.origin.x = (self.width - rect.size.width) / 2;
-                imageData.imageMidPostion = rect;
+        if ([imageData.name containsString:@"http://"] || [imageData.name containsString:@"https://"]) {
+            
+            [[SDWebImageManager sharedManager] loadImageWithURL:[NSURL URLWithString:imageData.name] options:0 progress:nil completed:^(UIImage * _Nullable image, NSData * _Nullable data, NSError * _Nullable error, SDImageCacheType cacheType, BOOL finished, NSURL * _Nullable imageURL) {
+                if (!error) {
+                    [self drawImageimmediately:image data:imageData context:context];
+                }
+                [self setNeedsDisplay];
+            }];
+        }else{
+            UIImage *image = [UIImage imageNamed:imageData.name];
+            if (image) {
+                if (CGRectIsEmpty(imageData.imageMidPostion)) {
+                    CGRect rect = imageData.imagePosition;
+                    rect.origin.x = (self.width - rect.size.width) / 2;
+                    imageData.imageMidPostion = rect;
+                }
+                CGContextDrawImage(context, imageData.imageMidPostion, image.CGImage);
             }
-            CGContextDrawImage(context, imageData.imageMidPostion, image.CGImage);
         }
     }
 }

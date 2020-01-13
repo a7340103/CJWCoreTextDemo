@@ -21,6 +21,7 @@
 		2EC97C7823C31E58006CE2D8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2EC97C7723C31E58006CE2D8 /* Assets.xcassets */; };
 		2EC97C7B23C31E58006CE2D8 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2EC97C7923C31E58006CE2D8 /* LaunchScreen.storyboard */; };
 		2EC97C7E23C31E58006CE2D8 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 2EC97C7D23C31E58006CE2D8 /* main.m */; };
+		696F7087F11145F5E6090E25 /* Pods_CJWCoreTextDemo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B192F0D07FE23F899CE7A0CA /* Pods_CJWCoreTextDemo.framework */; };
 		7A3103D623C6109900972F96 /* cursor@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7A3103D523C6109900972F96 /* cursor@2x.png */; };
 		7ABB422C23C4B520003C8403 /* test.json in Resources */ = {isa = PBXBuildFile; fileRef = 7ABB422B23C4B520003C8403 /* test.json */; };
 		7ABB422F23C4C1FD003C8403 /* coretext-image-1.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 7ABB422D23C4C1FC003C8403 /* coretext-image-1.jpg */; };
@@ -30,6 +31,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		1DCBD6D6B5572576679E4687 /* Pods-CJWCoreTextDemo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CJWCoreTextDemo.debug.xcconfig"; path = "Target Support Files/Pods-CJWCoreTextDemo/Pods-CJWCoreTextDemo.debug.xcconfig"; sourceTree = "<group>"; };
 		2E64EB0123C5D11200932FF2 /* CJWCoreTextLinkData.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CJWCoreTextLinkData.h; sourceTree = "<group>"; };
 		2E64EB0223C5D11200932FF2 /* CJWCoreTextLinkData.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CJWCoreTextLinkData.m; sourceTree = "<group>"; };
 		2E64EB0423C5D32500932FF2 /* CJWCoreTextUtils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CJWCoreTextUtils.h; sourceTree = "<group>"; };
@@ -66,6 +68,8 @@
 		7ABB423223C4C9CB003C8403 /* CJWCoreTextImageData.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CJWCoreTextImageData.m; sourceTree = "<group>"; };
 		7AFEA7CC23C75B33009404BE /* CJWCustomToolView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CJWCustomToolView.h; sourceTree = "<group>"; };
 		7AFEA7CD23C75B33009404BE /* CJWCustomToolView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CJWCustomToolView.m; sourceTree = "<group>"; };
+		B192F0D07FE23F899CE7A0CA /* Pods_CJWCoreTextDemo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CJWCoreTextDemo.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		EC91AAED5F36B799BDDE12F3 /* Pods-CJWCoreTextDemo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CJWCoreTextDemo.release.xcconfig"; path = "Target Support Files/Pods-CJWCoreTextDemo/Pods-CJWCoreTextDemo.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -73,6 +77,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				696F7087F11145F5E6090E25 /* Pods_CJWCoreTextDemo.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -95,6 +100,8 @@
 			children = (
 				2EC97C6A23C31E57006CE2D8 /* CJWCoreTextDemo */,
 				2EC97C6923C31E57006CE2D8 /* Products */,
+				F798F213D321857F3CD08164 /* Pods */,
+				FC6810BB2FEF22BEF7807CFD /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -177,6 +184,24 @@
 			path = resource;
 			sourceTree = "<group>";
 		};
+		F798F213D321857F3CD08164 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				1DCBD6D6B5572576679E4687 /* Pods-CJWCoreTextDemo.debug.xcconfig */,
+				EC91AAED5F36B799BDDE12F3 /* Pods-CJWCoreTextDemo.release.xcconfig */,
+			);
+			name = Pods;
+			path = Pods;
+			sourceTree = "<group>";
+		};
+		FC6810BB2FEF22BEF7807CFD /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				B192F0D07FE23F899CE7A0CA /* Pods_CJWCoreTextDemo.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -184,9 +209,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 2EC97C8123C31E58006CE2D8 /* Build configuration list for PBXNativeTarget "CJWCoreTextDemo" */;
 			buildPhases = (
+				E37083F636DEBE2A009538E2 /* [CP] Check Pods Manifest.lock */,
 				2EC97C6423C31E57006CE2D8 /* Sources */,
 				2EC97C6523C31E57006CE2D8 /* Frameworks */,
 				2EC97C6623C31E57006CE2D8 /* Resources */,
+				02282A5DA7103E99B2C8C154 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -246,6 +273,48 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		02282A5DA7103E99B2C8C154 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-CJWCoreTextDemo/Pods-CJWCoreTextDemo-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-CJWCoreTextDemo/Pods-CJWCoreTextDemo-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-CJWCoreTextDemo/Pods-CJWCoreTextDemo-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		E37083F636DEBE2A009538E2 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-CJWCoreTextDemo-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		2EC97C6423C31E57006CE2D8 /* Sources */ = {
@@ -409,6 +478,7 @@
 		};
 		2EC97C8223C31E58006CE2D8 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 1DCBD6D6B5572576679E4687 /* Pods-CJWCoreTextDemo.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -427,6 +497,7 @@
 		};
 		2EC97C8323C31E58006CE2D8 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = EC91AAED5F36B799BDDE12F3 /* Pods-CJWCoreTextDemo.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;

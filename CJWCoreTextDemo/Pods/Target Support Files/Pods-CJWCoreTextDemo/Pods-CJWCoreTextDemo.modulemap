@@ -1,0 +1,6 @@
+framework module Pods_CJWCoreTextDemo {
+  umbrella header "Pods-CJWCoreTextDemo-umbrella.h"
+
+  export *
+  module * { export * }
+}
