@@ -400,6 +400,10 @@ didCompleteWithError:(nullable NSError *)error
 	[[NSNotificationCenter defaultCenter] postNotificationName:DTLazyImageViewDidFinishDownloadNotification object:self userInfo:userInfo];
 }
 
+- (void)setFrame:(CGRect)frame{
+    [super setFrame:frame];
+}
+
 #pragma mark Properties
 
 - (void) setUrlRequest:(NSMutableURLRequest *)request

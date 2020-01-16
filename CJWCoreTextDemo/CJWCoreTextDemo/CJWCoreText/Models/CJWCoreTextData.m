@@ -81,6 +81,8 @@
             CGRect colRect = CGPathGetBoundingBox(pathRef);
             CGRect delegateBounds = CGRectOffset(runBounds, colRect.origin.x, colRect.origin.y);
             
+            //调整y，若图片位于行首，不调整；图片位于行中，则换行绘制
+            
             imageData.imagePosition = delegateBounds;
             
             //设置下个imageData

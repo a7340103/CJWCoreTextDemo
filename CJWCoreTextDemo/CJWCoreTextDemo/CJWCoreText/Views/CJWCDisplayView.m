@@ -255,12 +255,12 @@ typedef enum CTDisplayViewState : NSInteger {
 }
 
 - (void)drawImageimmediately:(UIImage *)image data:(CJWCoreTextImageData *)imageData context:(CGContextRef)context{
-    if (CGRectIsEmpty(imageData.imageMidPostion)) {
-        CGRect rect = imageData.imagePosition;
-        rect.origin.x = (self.width - rect.size.width) / 2;
-        imageData.imageMidPostion = rect;
-    }
-    CGContextDrawImage(context, imageData.imageMidPostion, image.CGImage);
+//    if (CGRectIsEmpty(imageData.imageMidPostion)) {
+//        CGRect rect = imageData.imagePosition;
+//        rect.origin.x = (self.width - rect.size.width) / 2;
+//        imageData.imageMidPostion = rect;
+//    }
+    CGContextDrawImage(context, imageData.imagePosition, image.CGImage);
 }
 
 - (void)drawImages:(CGContextRef)context{
@@ -275,14 +275,14 @@ typedef enum CTDisplayViewState : NSInteger {
             }];
         }else{
             UIImage *image = [UIImage imageNamed:imageData.name];
-            if (image) {
-                if (CGRectIsEmpty(imageData.imageMidPostion)) {
-                    CGRect rect = imageData.imagePosition;
-                    rect.origin.x = (self.width - rect.size.width) / 2;
-                    imageData.imageMidPostion = rect;
-                }
-                CGContextDrawImage(context, imageData.imageMidPostion, image.CGImage);
-            }
+//            if (image) {
+//                if (CGRectIsEmpty(imageData.imageMidPostion)) {
+//                    CGRect rect = imageData.imagePosition;
+//                    rect.origin.x = (self.width - rect.size.width) / 2;
+//                    imageData.imageMidPostion = rect;
+//                }
+                CGContextDrawImage(context, imageData.imagePosition, image.CGImage);
+//            }
         }
     }
 }

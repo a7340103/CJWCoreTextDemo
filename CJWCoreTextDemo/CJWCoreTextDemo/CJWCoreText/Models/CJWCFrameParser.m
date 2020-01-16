@@ -57,6 +57,26 @@
     
 }
 
++ (CJWCoreTextData *)parseHtml:(NSString *)localPath config:(CJWCFrameParserConfig*)config {
+    NSString *path = [[NSBundle mainBundle] pathForResource:localPath ofType:@"html"];
+    NSString *html = [[NSString alloc] initWithContentsOfFile:path encoding:NSUTF8StringEncoding error:nil];
+    // Load HTML data
+    NSData *data = [html dataUsingEncoding:NSUTF8StringEncoding];
+    NSAttributedString *string = [[NSAttributedString alloc] initWithHTMLData:data options:nil documentAttributes:NULL];
+    
+    NSString *plainString = [string string];
+    NSRegularExpression *regUnicodeBlank = [NSRegularExpression regularExpressionWithPattern:@"[\\u200b\\u200B]" options:0 error:NULL];
+    
+    NSMutableAttributedString *mutableAttributedString = [string mutableCopy];
+    
+    NSArray *results = [regUnicodeBlank matchesInString:plainString options:0 range:NSMakeRange(0, [plainString length])];
+    
+    for (NSInteger i = results.count - 1; i >= 0; i --) {
+        NSTextCheckingResult *result = [results objectAtIndex:i];
+        [mutableAttributedString deleteCharactersInRange:result.range];
+    }
+    
+    return  [self parseAttributedContent:mutableAttributedString config:config];}
 
 // 方法一
 + (CJWCoreTextData *)parseTemplateFile:(NSString *)path config:(CJWCFrameParserConfig*)config {
@@ -96,7 +116,7 @@
                     }
                 }else if ([type isEqualToString:@"img"]){
                     //拼接换行
-                    [self appendPreLineStr:result];
+//                    [self appendPreLineStr:result];
                     // 创建 CoreTextImageData
                     CJWCoreTextImageData *imageData = [[CJWCoreTextImageData alloc] init];
                     imageData.name = dict[@"name"];
@@ -106,7 +126,7 @@
                     NSAttributedString *as = [self parseImageDataFromNSDictionary:dict config:config];
                     [result appendAttributedString:as];
                     //拼接换行
-                    [self appendNewLineStr:i lineCount:array.count content:result];
+//                    [self appendNewLineStr:i lineCount:array.count content:result];
                 }else if ([type isEqualToString:@"link"]){
                     NSUInteger startPos = result.length;
                     NSAttributedString *as =

@@ -17,6 +17,8 @@
     #import "CoreText/CoreText.h"
     #import "UIView+frameAdjust.h"
     #import <SDWebImage/SDWebImage.h>
+    #import <DTCoreText/DTCoreText.h>
+    #import <DTFoundation/DTAnimatedGIF.h>
 #endif
 
 #ifdef DEBUG

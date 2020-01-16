@@ -3,12 +3,14 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
 		2E64EB0323C5D11200932FF2 /* CJWCoreTextLinkData.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E64EB0223C5D11200932FF2 /* CJWCoreTextLinkData.m */; };
 		2E64EB0623C5D32500932FF2 /* CJWCoreTextUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E64EB0523C5D32500932FF2 /* CJWCoreTextUtils.m */; };
+		2E99387423D042F500D79AAB /* test3.html in Resources */ = {isa = PBXBuildFile; fileRef = 2E99387323D042F500D79AAB /* test3.html */; };
+		2E99387723D0663900D79AAB /* CJWCAttributedTextContentView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E99387623D0663900D79AAB /* CJWCAttributedTextContentView.m */; };
 		2E9F9F8523C87328008292A8 /* coretext-image-3.png in Resources */ = {isa = PBXBuildFile; fileRef = 2E9F9F8423C87327008292A8 /* coretext-image-3.png */; };
 		2EBE264D23C472480081191C /* UIView+frameAdjust.m in Sources */ = {isa = PBXBuildFile; fileRef = 2EBE264A23C472480081191C /* UIView+frameAdjust.m */; };
 		2EBE265023C4724F0081191C /* CJWCDisplayView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2EBE264F23C4724F0081191C /* CJWCDisplayView.m */; };
@@ -36,6 +38,9 @@
 		2E64EB0223C5D11200932FF2 /* CJWCoreTextLinkData.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CJWCoreTextLinkData.m; sourceTree = "<group>"; };
 		2E64EB0423C5D32500932FF2 /* CJWCoreTextUtils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CJWCoreTextUtils.h; sourceTree = "<group>"; };
 		2E64EB0523C5D32500932FF2 /* CJWCoreTextUtils.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CJWCoreTextUtils.m; sourceTree = "<group>"; };
+		2E99387323D042F500D79AAB /* test3.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = test3.html; sourceTree = "<group>"; };
+		2E99387523D0663900D79AAB /* CJWCAttributedTextContentView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CJWCAttributedTextContentView.h; sourceTree = "<group>"; };
+		2E99387623D0663900D79AAB /* CJWCAttributedTextContentView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CJWCAttributedTextContentView.m; sourceTree = "<group>"; };
 		2E9F9F8423C87327008292A8 /* coretext-image-3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "coretext-image-3.png"; sourceTree = "<group>"; };
 		2EBE264923C472480081191C /* CommonDefine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommonDefine.h; sourceTree = "<group>"; };
 		2EBE264A23C472480081191C /* UIView+frameAdjust.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+frameAdjust.m"; sourceTree = "<group>"; };
@@ -120,6 +125,7 @@
 				7ABB422D23C4C1FC003C8403 /* coretext-image-1.jpg */,
 				7ABB422E23C4C1FC003C8403 /* coretext-image-2.jpg */,
 				7ABB422B23C4B520003C8403 /* test.json */,
+				2E99387323D042F500D79AAB /* test3.html */,
 				2EC97C8423C31EAD006CE2D8 /* CJWCoreText */,
 				2EC97C6B23C31E57006CE2D8 /* AppDelegate.h */,
 				2EC97C6C23C31E57006CE2D8 /* AppDelegate.m */,
@@ -172,6 +178,8 @@
 				2EBE264F23C4724F0081191C /* CJWCDisplayView.m */,
 				7AFEA7CC23C75B33009404BE /* CJWCustomToolView.h */,
 				7AFEA7CD23C75B33009404BE /* CJWCustomToolView.m */,
+				2E99387523D0663900D79AAB /* CJWCAttributedTextContentView.h */,
+				2E99387623D0663900D79AAB /* CJWCAttributedTextContentView.m */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -190,7 +198,6 @@
 				1DCBD6D6B5572576679E4687 /* Pods-CJWCoreTextDemo.debug.xcconfig */,
 				EC91AAED5F36B799BDDE12F3 /* Pods-CJWCoreTextDemo.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -268,6 +275,7 @@
 				7ABB422F23C4C1FD003C8403 /* coretext-image-1.jpg in Resources */,
 				7ABB423023C4C1FD003C8403 /* coretext-image-2.jpg in Resources */,
 				2EC97C7623C31E57006CE2D8 /* Main.storyboard in Resources */,
+				2E99387423D042F500D79AAB /* test3.html in Resources */,
 				2E9F9F8523C87328008292A8 /* coretext-image-3.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -322,6 +330,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				2EBE265823C472580081191C /* CJWCoreTextData.m in Sources */,
+				2E99387723D0663900D79AAB /* CJWCAttributedTextContentView.m in Sources */,
 				2EC97C7323C31E57006CE2D8 /* ViewController.m in Sources */,
 				7AFEA7CE23C75B33009404BE /* CJWCustomToolView.m in Sources */,
 				2E64EB0323C5D11200932FF2 /* CJWCoreTextLinkData.m in Sources */,

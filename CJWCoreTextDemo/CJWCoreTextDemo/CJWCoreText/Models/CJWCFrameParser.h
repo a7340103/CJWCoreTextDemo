@@ -20,6 +20,8 @@ NS_ASSUME_NONNULL_BEGIN
 + (CJWCoreTextData *)parseContent:(NSString *)content config:(CJWCFrameParserConfig*)config;
 + (CJWCoreTextData *)parseAttributedContent:(NSAttributedString *)content config:(CJWCFrameParserConfig*)config;
 + (CJWCoreTextData *)parseTemplateFile:(NSString *)path config:(CJWCFrameParserConfig*)config;
+//显示html
++ (CJWCoreTextData *)parseHtml:(NSString *)localPath config:(CJWCFrameParserConfig*)config;
 
 @end
 
