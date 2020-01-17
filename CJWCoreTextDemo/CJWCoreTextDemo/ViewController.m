@@ -29,7 +29,7 @@
     self.display.backgroundColor = [UIColor yellowColor];
     self.display.delegate = self;
     
-    NSString *path = [[NSBundle mainBundle] pathForResource:@"test3" ofType:@"html"];
+    NSString *path = [[NSBundle mainBundle] pathForResource:@"test4" ofType:@"html"];
     NSString *html = [[NSString alloc] initWithContentsOfFile:path encoding:NSUTF8StringEncoding error:nil];
     // Load HTML data
     NSData *data = [html dataUsingEncoding:NSUTF8StringEncoding];
