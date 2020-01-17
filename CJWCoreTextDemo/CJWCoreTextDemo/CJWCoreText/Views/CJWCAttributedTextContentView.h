@@ -6,7 +6,7 @@
 //  Copyright © 2020 djw.cc. All rights reserved.
 //
 
-#import <DTCoreText/DTCoreText.h>
+#import "DTCoreText.h"
 
 NS_ASSUME_NONNULL_BEGIN
 

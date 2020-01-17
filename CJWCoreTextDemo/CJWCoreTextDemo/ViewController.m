@@ -68,7 +68,8 @@
     if([attachment isKindOfClass:[DTImageTextAttachment class]])
     {
         NSString *imageURL = [NSString stringWithFormat:@"%@", attachment.contentURL];
-        CGRect rect = {{(frame.size.width - 2)/2.0, (frame.size.height - 2)/2.0},frame.size};
+        
+        CGRect rect = {{(kScreenWidth - frame.size.width )/2.0, frame.origin.y},frame.size};
 //        CGRect rect = CGRectMake((frame.size.width - 2)/2.0, (frame.size.height - 2)/2.0, frame.size.width, fra)
         DTLazyImageView *imageView = [[DTLazyImageView alloc] initWithFrame:rect];
         imageView.frame = rect;
@@ -81,15 +82,129 @@
             dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
                 NSData *gifData = [NSData dataWithContentsOfURL:attachment.contentURL];
                 dispatch_async(dispatch_get_main_queue(), ^{
-                    imageView.image = DTAnimatedGIFFromData(gifData);
+                    imageView.image = [self DTAnimatedGIFFromData:gifData];
                 });
             });
         }
-        
+
         return imageView;
         
     }
     return nil;
 }
+
+-(UIImage *) DTAnimatedGIFFromData:(NSData *)data
+{
+    CGImageSourceRef source = CGImageSourceCreateWithData((__bridge CFDataRef)(data), NULL);
+    
+    if (!source)
+    {
+        return nil;
+    }
+
+    UIImage *image = [self DTAnimatedGIFFromImageSource:source];
+    CFRelease(source);
+    
+    return image;
+}
+
+- (UIImage *)DTAnimatedGIFFromImageSource:(CGImageSourceRef )source
+{
+    size_t const numImages = CGImageSourceGetCount(source);
+    
+    NSMutableArray *frames = [NSMutableArray arrayWithCapacity:numImages];
+    
+    // determine gretest common factor of all image durations
+    NSUInteger greatestCommonFactor = [self DTAnimatedGIFFrameDurationForImageAtIndex:source index:0];
+    
+    for (NSUInteger i=1; i<numImages; i++)
+    {
+        NSUInteger centiSecs = [self DTAnimatedGIFFrameDurationForImageAtIndex:source index:i];
+        greatestCommonFactor = [self DTAnimatedGIFGreatestCommonFactor:greatestCommonFactor num2:centiSecs];
+    }
+    
+    // build array of images, duplicating as necessary
+    for (NSUInteger i=0; i<numImages; i++)
+    {
+        CGImageRef cgImage = CGImageSourceCreateImageAtIndex(source, i, NULL);
+        UIImage *frame = [UIImage imageWithCGImage:cgImage];
+        
+        NSUInteger centiSecs = [self DTAnimatedGIFFrameDurationForImageAtIndex:source index:i];
+        NSUInteger repeat = centiSecs/greatestCommonFactor;
+        
+        for (NSUInteger j=0; j<repeat; j++)
+        {
+            [frames addObject:frame];
+        }
+        
+        CGImageRelease(cgImage);
+    }
+    
+    // create animated image from the array
+    NSTimeInterval totalDuration = [frames count] * greatestCommonFactor / 100.0;
+    return [UIImage animatedImageWithImages:frames duration:totalDuration];
+}
+
+- (NSUInteger) DTAnimatedGIFFrameDurationForImageAtIndex:(CGImageSourceRef) source index:(NSUInteger) index
+{
+    NSUInteger frameDuration = 10;
+    
+    NSDictionary *frameProperties = CFBridgingRelease(CGImageSourceCopyPropertiesAtIndex(source,index,nil));
+    NSDictionary *gifProperties = frameProperties[(NSString *)kCGImagePropertyGIFDictionary];
+    
+    NSNumber *delayTimeUnclampedProp = gifProperties[(NSString *)kCGImagePropertyGIFUnclampedDelayTime];
+    
+    if(delayTimeUnclampedProp)
+    {
+        frameDuration = [delayTimeUnclampedProp floatValue]*100;
+    }
+    else
+    {
+        NSNumber *delayTimeProp = gifProperties[(NSString *)kCGImagePropertyGIFDelayTime];
+        
+        if(delayTimeProp)
+        {
+            frameDuration = [delayTimeProp floatValue]*100;
+        }
+    }
+    
+    // Many annoying ads specify a 0 duration to make an image flash as quickly as possible.
+    // We follow Firefox's behavior and use a duration of 100 ms for any frames that specify
+    // a duration of <= 10 ms. See <rdar://problem/7689300> and <http://webkit.org/b/36082>
+    // for more information.
+    
+    if (frameDuration < 1)
+    {
+        frameDuration = 10;
+    }
+    
+    return frameDuration;
+}
+
+// returns the great common factor of two numbers
+- (NSUInteger) DTAnimatedGIFGreatestCommonFactor:(NSUInteger) num1 num2:(NSUInteger) num2
+{
+    NSUInteger t, remainder;
+    
+    if (num1 < num2)
+    {
+        t = num1;
+        num1 = num2;
+        num2 = t;
+    }
+    
+    remainder = num1 % num2;
+    
+    if (!remainder)
+    {
+        return num2;
+    }
+    else
+    {
+        return [self DTAnimatedGIFGreatestCommonFactor:num2 num2:remainder];
+    }
+}
+
+
 
 @end

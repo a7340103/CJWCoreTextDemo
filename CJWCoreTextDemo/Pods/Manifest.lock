@@ -1,40 +1,18 @@
 PODS:
-  - DTCoreText (1.6.23):
-    - DTCoreText/Core (= 1.6.23)
-    - DTFoundation/Core (~> 1.7.5)
-    - DTFoundation/DTAnimatedGIF (~> 1.7.5)
-    - DTFoundation/DTHTMLParser (~> 1.7.5)
-    - DTFoundation/UIKit (~> 1.7.5)
-  - DTCoreText/Core (1.6.23):
-    - DTFoundation/Core (~> 1.7.5)
-    - DTFoundation/DTAnimatedGIF (~> 1.7.5)
-    - DTFoundation/DTHTMLParser (~> 1.7.5)
-    - DTFoundation/UIKit (~> 1.7.5)
-  - DTFoundation/Core (1.7.14)
-  - DTFoundation/DTAnimatedGIF (1.7.14)
-  - DTFoundation/DTHTMLParser (1.7.14):
-    - DTFoundation/Core
-  - DTFoundation/UIKit (1.7.14):
-    - DTFoundation/Core
   - SDWebImage (5.4.1):
     - SDWebImage/Core (= 5.4.1)
   - SDWebImage/Core (5.4.1)
 
 DEPENDENCIES:
-  - DTCoreText
   - SDWebImage
 
 SPEC REPOS:
-  https://github.com/cocoapods/specs.git:
-    - DTCoreText
-    - DTFoundation
+  https://github.com/CocoaPods/Specs.git:
     - SDWebImage
 
 SPEC CHECKSUMS:
-  DTCoreText: 67023bb51b26711d5f640c851f4845aea14c24c9
-  DTFoundation: 25aa19bb7c6e225b1dfae195604fb8cf1da0ab4c
   SDWebImage: 29c340dbdcef342bb13125553f4e19ce056b07a7
 
-PODFILE CHECKSUM: 19f63624e19ec893c36e2b791c3b424b8df4659c
+PODFILE CHECKSUM: cb23a61a5b4f9262556106d4e9136aaf2dd35d8d
 
-COCOAPODS: 1.7.1
+COCOAPODS: 1.8.4
