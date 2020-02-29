@@ -76,10 +76,10 @@
 #import "DTLazyImageView.h"
 #import "DTLinkButton.h"
 
-#import "DTAttributedLabel.h"
-#import "DTAttributedTextCell.h"
+//#import "DTAttributedLabel.h"
+//#import "DTAttributedTextCell.h"
 #import "DTAttributedTextContentView.h"
-#import "DTAttributedTextView.h"
+//#import "DTAttributedTextView.h"
 #import "DTCoreTextFontCollection.h"
 
 #import "DTDictationPlaceholderView.h"

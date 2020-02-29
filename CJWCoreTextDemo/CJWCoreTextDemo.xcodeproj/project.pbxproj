@@ -118,6 +118,7 @@
 		2EDADB9523D1995C002FD5A9 /* NSAttributedString+HTML.m in Sources */ = {isa = PBXBuildFile; fileRef = 2EDADB5523D1995C002FD5A9 /* NSAttributedString+HTML.m */; };
 		2EDADB9723D1995C002FD5A9 /* DTTextAttachmentHTMLElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 2EDADB5723D1995C002FD5A9 /* DTTextAttachmentHTMLElement.m */; };
 		696F7087F11145F5E6090E25 /* Pods_CJWCoreTextDemo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B192F0D07FE23F899CE7A0CA /* Pods_CJWCoreTextDemo.framework */; };
+		7A24E0512405489600C8B3A1 /* CJWCLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A24E0502405489600C8B3A1 /* CJWCLayer.m */; };
 		7A3103D623C6109900972F96 /* cursor@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 7A3103D523C6109900972F96 /* cursor@2x.png */; };
 		7ABB422C23C4B520003C8403 /* test.json in Resources */ = {isa = PBXBuildFile; fileRef = 7ABB422B23C4B520003C8403 /* test.json */; };
 		7ABB422F23C4C1FD003C8403 /* coretext-image-1.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 7ABB422D23C4C1FC003C8403 /* coretext-image-1.jpg */; };
@@ -348,6 +349,8 @@
 		2EDADB5723D1995C002FD5A9 /* DTTextAttachmentHTMLElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DTTextAttachmentHTMLElement.m; sourceTree = "<group>"; };
 		2EDADB5823D1995C002FD5A9 /* NSString+Paragraphs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+Paragraphs.h"; sourceTree = "<group>"; };
 		2EDADB5923D1995C002FD5A9 /* NSAttributedString+DTDebug.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSAttributedString+DTDebug.h"; sourceTree = "<group>"; };
+		7A24E04F2405489600C8B3A1 /* CJWCLayer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CJWCLayer.h; sourceTree = "<group>"; };
+		7A24E0502405489600C8B3A1 /* CJWCLayer.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CJWCLayer.m; sourceTree = "<group>"; };
 		7A3103D523C6109900972F96 /* cursor@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "cursor@2x.png"; sourceTree = "<group>"; };
 		7ABB422B23C4B520003C8403 /* test.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = test.json; sourceTree = "<group>"; };
 		7ABB422D23C4C1FC003C8403 /* coretext-image-1.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "coretext-image-1.jpg"; sourceTree = "<group>"; };
@@ -466,6 +469,8 @@
 				7AFEA7CD23C75B33009404BE /* CJWCustomToolView.m */,
 				2E99387523D0663900D79AAB /* CJWCAttributedTextContentView.h */,
 				2E99387623D0663900D79AAB /* CJWCAttributedTextContentView.m */,
+				7A24E04F2405489600C8B3A1 /* CJWCLayer.h */,
+				7A24E0502405489600C8B3A1 /* CJWCLayer.m */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -939,6 +944,7 @@
 				2EC97C7323C31E57006CE2D8 /* ViewController.m in Sources */,
 				2EDADB9323D1995C002FD5A9 /* DTIframeTextAttachment.m in Sources */,
 				2EDADA8123D198D2002FD5A9 /* DTAnimatedGIF.m in Sources */,
+				7A24E0512405489600C8B3A1 /* CJWCLayer.m in Sources */,
 				2EDADB6823D1995C002FD5A9 /* NSNumber+RomanNumerals.m in Sources */,
 				2EDADB8923D1995C002FD5A9 /* NSString+HTML.m in Sources */,
 				2EDADB9523D1995C002FD5A9 /* NSAttributedString+HTML.m in Sources */,

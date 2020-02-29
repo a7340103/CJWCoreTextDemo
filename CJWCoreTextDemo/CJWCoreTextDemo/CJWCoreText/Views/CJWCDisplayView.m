@@ -9,6 +9,7 @@
 #import "CJWCDisplayView.h"
 #import "CJWCoreTextUtils.h"
 #import "CJWCustomToolView.h"
+#import "CJWCLayer.h"
 
 #define ANCHOR_TARGET_TAG 1
 
@@ -29,22 +30,29 @@ typedef enum CTDisplayViewState : NSInteger {
 @property (strong, nonatomic) UIImageView *leftSelectionAnchor;
 @property (strong, nonatomic) UIImageView *rightSelectionAnchor;
 @property (strong, nonatomic) CJWCustomToolView *toolView;
+///绘制队列
+@property (nonatomic ,strong) dispatch_queue_t syncQueue;
+
 @end
 
 
 @implementation CJWCDisplayView
 
++(Class)layerClass {
+    return [CJWCLayer class];
+}
+
 - (instancetype)initWithFrame:(CGRect)frame{
     if (self = [super initWithFrame:frame]) {
         [self setupEvents];
-    }
-    return self;
-}
+        CJWCLayer * layer = (CJWCLayer *)self.layer;
+        layer.contentsScale = [UIScreen mainScreen].scale;
+        __weak typeof(self)weakSelf = self;
+        layer.displayBlock = ^(CGContextRef  _Nonnull context, BOOL (^ _Nonnull isCanceled)(void)) {
+           [weakSelf drawAsync:context isCanceled:isCanceled];
 
-- (id)initWithCoder:(NSCoder *)aDecoder {
-    self = [super initWithCoder:aDecoder];
-    if (self) {
-        [self setupEvents];
+        };
+
     }
     return self;
 }
@@ -229,9 +237,34 @@ typedef enum CTDisplayViewState : NSInteger {
     }
 }
 
-- (void)drawRect:(CGRect)rect{
-    [super drawRect:rect];
-    
+- (void)drawAsync:(CGContextRef)context isCanceled:(BOOL(^)(void))isCanceled{
+    dispatch_barrier_sync(self.syncQueue, ^{
+        //获取当前绘制上下文
+        //为什么要回去上下文呢？因为我们所有的绘制操作都是在上下文上进行绘制的。
+        //UIGraphicsGetCurrentContext()获取的context由系统维护，不需要手动释放
+//        CGContextRef context = UIGraphicsGetCurrentContext();
+        //设置字形的变换矩阵为不做图形变换
+        CGContextSetTextMatrix(context, CGAffineTransformIdentity);
+        //平移方法，将画布向上平移一个屏幕高
+        CGContextTranslateCTM(context, 0, self.bounds.size.height);
+        //缩放方法，x轴缩放系数为1，则不变，y轴缩放系数为-1，则相当于以x轴为轴旋转180度
+        CGContextScaleCTM(context, 1.0, -1.0);
+        
+        if (self.state == CTDisplayViewStateTouching || self.state == CTDisplayViewStateSelecting) {
+            [self drawSelectionArea];
+            [self drawAnchors];
+        }
+        
+        if (self.data) {
+            CTFrameDraw(self.data.ctFrame, context);
+        }
+        [self drawImages:context];
+        
+    });
+
+}
+
+- (void)drawAsync{
     //获取当前绘制上下文
     //为什么要回去上下文呢？因为我们所有的绘制操作都是在上下文上进行绘制的。
     //UIGraphicsGetCurrentContext()获取的context由系统维护，不需要手动释放
@@ -242,7 +275,7 @@ typedef enum CTDisplayViewState : NSInteger {
     CGContextTranslateCTM(context, 0, self.bounds.size.height);
     //缩放方法，x轴缩放系数为1，则不变，y轴缩放系数为-1，则相当于以x轴为轴旋转180度
     CGContextScaleCTM(context, 1.0, -1.0);
-
+    
     if (self.state == CTDisplayViewStateTouching || self.state == CTDisplayViewStateSelecting) {
         [self drawSelectionArea];
         [self drawAnchors];
@@ -252,6 +285,11 @@ typedef enum CTDisplayViewState : NSInteger {
         CTFrameDraw(self.data.ctFrame, context);
     }
     [self drawImages:context];
+}
+
+- (void)drawRect:(CGRect)rect{
+    [super drawRect:rect];
+//    [self drawAsync];
 }
 
 - (void)drawImageimmediately:(UIImage *)image data:(CJWCoreTextImageData *)imageData context:(CGContextRef)context{
@@ -267,12 +305,12 @@ typedef enum CTDisplayViewState : NSInteger {
     for (CJWCoreTextImageData * imageData in self.data.imageArray) {
         if ([imageData.name containsString:@"http://"] || [imageData.name containsString:@"https://"]) {
             
-            [[SDWebImageManager sharedManager] loadImageWithURL:[NSURL URLWithString:imageData.name] options:0 progress:nil completed:^(UIImage * _Nullable image, NSData * _Nullable data, NSError * _Nullable error, SDImageCacheType cacheType, BOOL finished, NSURL * _Nullable imageURL) {
-                if (!error) {
-                    [self drawImageimmediately:image data:imageData context:context];
-                }
-                [self setNeedsDisplay];
-            }];
+//            [[SDWebImageManager sharedManager] loadImageWithURL:[NSURL URLWithString:imageData.name] options:0 progress:nil completed:^(UIImage * _Nullable image, NSData * _Nullable data, NSError * _Nullable error, SDImageCacheType cacheType, BOOL finished, NSURL * _Nullable imageURL) {
+//                if (!error) {
+//                    [self drawImageimmediately:image data:imageData context:context];
+//                }
+//                [self setNeedsDisplay];
+//            }];
         }else{
             UIImage *image = [UIImage imageNamed:imageData.name];
 //            if (image) {
@@ -487,6 +525,13 @@ typedef enum CTDisplayViewState : NSInteger {
         [self addSubview:_toolView];
     }
     return _toolView;
+}
+
+-(dispatch_queue_t)syncQueue {
+    if (!_syncQueue) {
+        _syncQueue = dispatch_queue_create("com.syncQueue.CJWWCoreText", DISPATCH_QUEUE_CONCURRENT);
+    }
+    return _syncQueue;
 }
 
 @end

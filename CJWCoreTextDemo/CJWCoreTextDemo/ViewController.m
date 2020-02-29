@@ -10,7 +10,7 @@
 #import "CJWCDisplayView.h"
 
 @interface ViewController ()<DTAttributedTextContentViewDelegate>
-@property (strong, nonatomic) DTAttributedTextContentView *display;
+@property (strong, nonatomic) CJWCDisplayView *display;
 
 @end
 
@@ -20,36 +20,37 @@
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
     // Do any additional setup after loading the view.
-    
-//    CJWCFrameParserConfig *config = [[CJWCFrameParserConfig alloc] init];
-//    config.width = self.display.width;
-//    CJWCoreTextData *data = [CJWCFrameParser parseHtml:@"test3" config:config];
-//    self.display.data = data;
-//    self.display.height = data.height;
+    NSString *path = [[NSBundle mainBundle] pathForResource:@"test" ofType:@"json"];
+
+    CJWCFrameParserConfig *config = [[CJWCFrameParserConfig alloc] init];
+    config.width = self.display.width;
+    CJWCoreTextData *data = [CJWCFrameParser parseTemplateFile:path config:config];
+    self.display.data = data;
+    self.display.height = data.height;
     self.display.backgroundColor = [UIColor yellowColor];
-    self.display.delegate = self;
+//    self.display.delegate = self;
     
-    NSString *path = [[NSBundle mainBundle] pathForResource:@"test4" ofType:@"html"];
-    NSString *html = [[NSString alloc] initWithContentsOfFile:path encoding:NSUTF8StringEncoding error:nil];
-    // Load HTML data
-    NSData *data = [html dataUsingEncoding:NSUTF8StringEncoding];
-    CGSize maxImageSize = CGSizeMake(300 , MAXFLOAT);
-
-    NSMutableDictionary *options = [NSMutableDictionary dictionaryWithObjectsAndKeys:
-                                   
-                                    [NSValue valueWithCGSize:maxImageSize], DTMaxImageSize,
-                                  
-                                    nil];
-
-    NSAttributedString *string = [[NSAttributedString alloc] initWithHTMLData:data options:options documentAttributes:NULL];
-    self.display.attributedString = string;
+//    NSString *path = [[NSBundle mainBundle] pathForResource:@"test4" ofType:@"html"];
+//    NSString *html = [[NSString alloc] initWithContentsOfFile:path encoding:NSUTF8StringEncoding error:nil];
+//    // Load HTML data
+//    NSData *data = [html dataUsingEncoding:NSUTF8StringEncoding];
+//    CGSize maxImageSize = CGSizeMake(300 , MAXFLOAT);
+//
+//    NSMutableDictionary *options = [NSMutableDictionary dictionaryWithObjectsAndKeys:
+//
+//                                    [NSValue valueWithCGSize:maxImageSize], DTMaxImageSize,
+//
+//                                    nil];
+//
+//    NSAttributedString *string = [[NSAttributedString alloc] initWithHTMLData:data options:options documentAttributes:NULL];
+//    self.display.attributedString = string;
 }
 
-- (DTAttributedTextContentView *)display{
+- (CJWCDisplayView *)display{
     if (!_display) {
         CGRect rect = self.view.bounds;
         rect.origin.y = 200;
-        _display = [[DTAttributedTextContentView alloc] initWithFrame:rect];
+        _display = [[CJWCDisplayView alloc] initWithFrame:rect];
         
         _display.backgroundColor = [UIColor whiteColor];
         [self.view addSubview:_display];
