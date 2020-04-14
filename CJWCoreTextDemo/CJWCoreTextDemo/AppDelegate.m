@@ -8,6 +8,7 @@
 
 #import "AppDelegate.h"
 #import "ViewController.h"
+#import "JWCrashReportCore.h"
 
 @interface AppDelegate ()
 
@@ -23,11 +24,13 @@
 //    [[NSBundle bundleWithPath:@"/Applications/InjectionIII.app/Contents/Resources/iOSInjection.bundle"] load];
     
 //    #endif
+//    [[JWCrashReportCore sharedInstance] thaw];
+
     self.window = [UIWindow new];
     [self.window makeKeyAndVisible];
     ViewController *vc = [[ViewController alloc]init];
-    self.window.rootViewController = vc;
-    
+    UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:vc];
+    self.window.rootViewController = nav;
     
     return YES;
 }

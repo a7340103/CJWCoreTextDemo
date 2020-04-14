@@ -7,4 +7,5 @@ target 'CJWCoreTextDemo' do
 
   # Pods for CJWCoreTextDemo
   pod 'SDWebImage'
+  pod 'AFNetworking'
 end

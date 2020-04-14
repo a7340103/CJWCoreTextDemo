@@ -23,7 +23,9 @@ typedef enum CTDisplayViewState : NSInteger {
     CTDisplayViewStateSelecting     // 选中了一些文本，需要弹出复制菜单
 }CTDisplayViewState;
 
-@interface CJWCDisplayView()
+@interface CJWCDisplayView(){
+    CGContextRef context;
+}
 @property (nonatomic) NSInteger selectionStartPosition;
 @property (nonatomic) NSInteger selectionEndPosition;
 @property (nonatomic) CTDisplayViewState state;
@@ -48,13 +50,17 @@ typedef enum CTDisplayViewState : NSInteger {
         CJWCLayer * layer = (CJWCLayer *)self.layer;
         layer.contentsScale = [UIScreen mainScreen].scale;
         __weak typeof(self)weakSelf = self;
-        layer.displayBlock = ^(CGContextRef  _Nonnull context, BOOL (^ _Nonnull isCanceled)(void)) {
-           [weakSelf drawAsync:context isCanceled:isCanceled];
-
+        layer.displayBlock = ^(CGContextRef  _Nonnull context, CGSize size, BOOL (^ _Nonnull isCanceled)(void)) {
+            [weakSelf drawAsync:context size:size isCanceled:isCanceled];
         };
 
     }
     return self;
+}
+
+-(void)setNeedsDisplay {
+    [super setNeedsDisplay];
+    [self.layer setNeedsDisplay];
 }
 
 - (void)setupEvents {
@@ -237,16 +243,17 @@ typedef enum CTDisplayViewState : NSInteger {
     }
 }
 
-- (void)drawAsync:(CGContextRef)context isCanceled:(BOOL(^)(void))isCanceled{
+- (void)drawAsync:(CGContextRef)context size:(CGSize)size isCanceled:(BOOL(^)(void))isCanceled{
     dispatch_barrier_sync(self.syncQueue, ^{
         //获取当前绘制上下文
         //为什么要回去上下文呢？因为我们所有的绘制操作都是在上下文上进行绘制的。
         //UIGraphicsGetCurrentContext()获取的context由系统维护，不需要手动释放
 //        CGContextRef context = UIGraphicsGetCurrentContext();
+//        CGContextSaveGState(context);
         //设置字形的变换矩阵为不做图形变换
         CGContextSetTextMatrix(context, CGAffineTransformIdentity);
         //平移方法，将画布向上平移一个屏幕高
-        CGContextTranslateCTM(context, 0, self.bounds.size.height);
+        CGContextTranslateCTM(context, 0, size.height);
         //缩放方法，x轴缩放系数为1，则不变，y轴缩放系数为-1，则相当于以x轴为轴旋转180度
         CGContextScaleCTM(context, 1.0, -1.0);
         
@@ -287,40 +294,30 @@ typedef enum CTDisplayViewState : NSInteger {
     [self drawImages:context];
 }
 
-- (void)drawRect:(CGRect)rect{
-    [super drawRect:rect];
+//- (void)drawRect:(CGRect)rect{
+//    [super drawRect:rect];
 //    [self drawAsync];
-}
+//}
 
-- (void)drawImageimmediately:(UIImage *)image data:(CJWCoreTextImageData *)imageData context:(CGContextRef)context{
-//    if (CGRectIsEmpty(imageData.imageMidPostion)) {
-//        CGRect rect = imageData.imagePosition;
-//        rect.origin.x = (self.width - rect.size.width) / 2;
-//        imageData.imageMidPostion = rect;
-//    }
-    CGContextDrawImage(context, imageData.imagePosition, image.CGImage);
-}
 
 - (void)drawImages:(CGContextRef)context{
     for (CJWCoreTextImageData * imageData in self.data.imageArray) {
-        if ([imageData.name containsString:@"http://"] || [imageData.name containsString:@"https://"]) {
-            
-//            [[SDWebImageManager sharedManager] loadImageWithURL:[NSURL URLWithString:imageData.name] options:0 progress:nil completed:^(UIImage * _Nullable image, NSData * _Nullable data, NSError * _Nullable error, SDImageCacheType cacheType, BOOL finished, NSURL * _Nullable imageURL) {
-//                if (!error) {
-//                    [self drawImageimmediately:image data:imageData context:context];
-//                }
-//                [self setNeedsDisplay];
-//            }];
+        if (imageData.image) {
+             CGContextDrawImage(context, imageData.imagePosition, imageData.image.CGImage);
         }else{
-            UIImage *image = [UIImage imageNamed:imageData.name];
-//            if (image) {
-//                if (CGRectIsEmpty(imageData.imageMidPostion)) {
-//                    CGRect rect = imageData.imagePosition;
-//                    rect.origin.x = (self.width - rect.size.width) / 2;
-//                    imageData.imageMidPostion = rect;
-//                }
-                CGContextDrawImage(context, imageData.imagePosition, image.CGImage);
-//            }
+            if ([imageData.name containsString:@"http://"] || [imageData.name containsString:@"https://"]) {
+                self->context = context;
+                [[SDWebImageManager sharedManager] loadImageWithURL:[NSURL URLWithString:imageData.name] options:0 progress:nil completed:^(UIImage * _Nullable image, NSData * _Nullable data, NSError * _Nullable error, SDImageCacheType cacheType, BOOL finished, NSURL * _Nullable imageURL) {
+                    if (!error && image) {
+                        imageData.image = image;
+                         [self setNeedsDisplay];
+                    }
+                }];
+            }else{
+                UIImage *image = [UIImage imageNamed:imageData.name];
+                imageData.image = image;
+                CGContextDrawImage(context, imageData.imagePosition, imageData.image.CGImage);
+            }
         }
     }
 }
@@ -512,6 +509,11 @@ typedef enum CTDisplayViewState : NSInteger {
     UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
     return image;
+}
+
+- (void)redraw{
+    [self setNeedsDisplay];
+    [self setNeedsLayout];
 }
 
 #pragma mark -lazy

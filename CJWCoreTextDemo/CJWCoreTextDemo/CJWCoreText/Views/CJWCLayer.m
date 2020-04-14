@@ -133,7 +133,7 @@ static dispatch_queue_t CWCoreTextLayerGetReleaseQueue() {
                 CGColorRelease(backgroundColor);
             }
             //绘制
-            self.displayBlock(context,isCancelled);
+            self.displayBlock(context,size,isCancelled);
             if (isCancelled()) {
                 UIGraphicsEndImageContext();
                 return;

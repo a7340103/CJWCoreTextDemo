@@ -8,6 +8,7 @@
 
 #import "ViewController.h"
 #import "CJWCDisplayView.h"
+#import "SecViewController.h"
 
 @interface ViewController ()<DTAttributedTextContentViewDelegate>
 @property (strong, nonatomic) CJWCDisplayView *display;
@@ -18,32 +19,82 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.view.backgroundColor = [UIColor whiteColor];
-    // Do any additional setup after loading the view.
-    NSString *path = [[NSBundle mainBundle] pathForResource:@"test" ofType:@"json"];
-
-    CJWCFrameParserConfig *config = [[CJWCFrameParserConfig alloc] init];
-    config.width = self.display.width;
-    CJWCoreTextData *data = [CJWCFrameParser parseTemplateFile:path config:config];
-    self.display.data = data;
-    self.display.height = data.height;
-    self.display.backgroundColor = [UIColor yellowColor];
-//    self.display.delegate = self;
+    self.view.backgroundColor = [UIColor redColor];
+    UIButton *but = [UIButton buttonWithType:UIButtonTypeSystem];
+    but.frame = CGRectMake(100, 100, 100, 100);
+    [but setTitle:@"go " forState:UIControlStateNormal];
+    [but setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [but addTarget:self action:@selector(go2) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:but];
     
-//    NSString *path = [[NSBundle mainBundle] pathForResource:@"test4" ofType:@"html"];
-//    NSString *html = [[NSString alloc] initWithContentsOfFile:path encoding:NSUTF8StringEncoding error:nil];
-//    // Load HTML data
-//    NSData *data = [html dataUsingEncoding:NSUTF8StringEncoding];
-//    CGSize maxImageSize = CGSizeMake(300 , MAXFLOAT);
-//
-//    NSMutableDictionary *options = [NSMutableDictionary dictionaryWithObjectsAndKeys:
-//
-//                                    [NSValue valueWithCGSize:maxImageSize], DTMaxImageSize,
-//
-//                                    nil];
-//
-//    NSAttributedString *string = [[NSAttributedString alloc] initWithHTMLData:data options:options documentAttributes:NULL];
-//    self.display.attributedString = string;
+    NSString *itemImg = @"";
+//    if (config && [[config objectForKey:NSStringFromClass([viewController class])] ? : @"" isEqualToString:@"0"]) {
+        itemImg = @"back_black";
+//    }else{
+//        itemImg = @"white_black";
+//    }
+    UIBarButtonItem *backItem = [[UIBarButtonItem alloc] initWithImage:[[UIImage imageNamed:itemImg] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal] style:UIBarButtonItemStylePlain target:self action:@selector(popself)];
+    self.navigationItem.leftBarButtonItem = backItem;
+ [self configNavigationBarHome:@"navgationbar_background"];
+}
+
+- (void)go2{
+    SecViewController *sec = [SecViewController new];
+    [self.navigationController pushViewController:sec animated:YES];
+}
+
+- (void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+}
+
+- (void)viewWillDisappear:(BOOL)animated{
+    [super viewWillDisappear:animated];
+   
+    
+}
+
+- (void)configNavigationBarHome:(NSString *)imgName{
+    [self.navigationController.navigationBar setBackgroundImage:[UIImage imageNamed:imgName] forBarMetrics:UIBarMetricsDefault];
+}
+
+
+- (void)testCoretext{
+    //    NSMutableDictionary *dic = [NSMutableDictionary dictionary];
+    //    dic ad
+        NSMutableArray *arr = [NSMutableArray array];
+        [arr addObject:@{@"completed":@"1"}];
+        [arr addObject:@{@"completed":@"2"}];
+        id obj2= [arr valueForKey:@"completed"];
+
+        NSSet *obj1 = [NSSet setWithArray:@[@1,@2,@2,@3,@4]];
+        NSMutableSet *obj = [NSMutableSet setWithArray:@[@1,@2,@2,@3,@4]];
+        self.view.backgroundColor = [UIColor whiteColor];
+        // Do any additional setup after loading the view.
+        NSString *path = [[NSBundle mainBundle] pathForResource:@"test" ofType:@"json"];
+
+        CJWCFrameParserConfig *config = [[CJWCFrameParserConfig alloc] init];
+        config.width = self.display.width;
+        CJWCoreTextData *data = [CJWCFrameParser parseTemplateFile:path config:config];
+        self.display.data = data;
+        self.display.height = data.height;
+        self.display.backgroundColor = [UIColor yellowColor];
+    //    [self.display setNeedsDisplay];
+    //    self.display.delegate = self;
+        
+    //    NSString *path = [[NSBundle mainBundle] pathForResource:@"test4" ofType:@"html"];
+    //    NSString *html = [[NSString alloc] initWithContentsOfFile:path encoding:NSUTF8StringEncoding error:nil];
+    //    // Load HTML data
+    //    NSData *data = [html dataUsingEncoding:NSUTF8StringEncoding];
+    //    CGSize maxImageSize = CGSizeMake(300 , MAXFLOAT);
+    //
+    //    NSMutableDictionary *options = [NSMutableDictionary dictionaryWithObjectsAndKeys:
+    //
+    //                                    [NSValue valueWithCGSize:maxImageSize], DTMaxImageSize,
+    //
+    //                                    nil];
+    //
+    //    NSAttributedString *string = [[NSAttributedString alloc] initWithHTMLData:data options:options documentAttributes:NULL];
+    //    self.display.attributedString = string;
 }
 
 - (CJWCDisplayView *)display{

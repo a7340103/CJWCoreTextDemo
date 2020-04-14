@@ -19,6 +19,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 //图片居中显示的CoreText 的坐标
 @property (nonatomic) CGRect imageMidPostion;
+@property (nonatomic, strong) UIImage *image;
+
 @end
 
 NS_ASSUME_NONNULL_END

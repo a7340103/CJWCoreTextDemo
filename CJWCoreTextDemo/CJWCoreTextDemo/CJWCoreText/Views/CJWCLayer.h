@@ -13,7 +13,7 @@ NS_ASSUME_NONNULL_BEGIN
 @interface CJWCLayer : CALayer
 
 @property (nonatomic, copy) BOOL (^cancelBlock)(void);
-@property (nonatomic ,copy) void (^displayBlock)(CGContextRef context,BOOL(^isCanceled)(void));
+@property (nonatomic ,copy) void (^displayBlock)(CGContextRef context, CGSize size, BOOL(^isCanceled)(void));
 
 @end
 
